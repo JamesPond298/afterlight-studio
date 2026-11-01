@@ -1,8 +1,13 @@
-# Afterlight — Studio Tycoon v2.1
+# Afterlight — Studio Tycoon v2.2
 
 Play online: https://jamespond298.github.io/afterlight-studio/
 
 A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Near-name hardware parodies, dialogue, event content, artwork, formulas, and balancing are original.
+
+## New in v2.2
+
+- Random title suggestions follow the selected topic and genre and avoid existing catalog titles. A separate Random topic & genre button suggests a new concept using unlocked topics and updates the preview.
+- Random engine, studio, and founder name buttons provide editable suggestions. Generating a name never spends money, advances time, or changes the simulation random seed. Studio/founder suggestions apply only after Save names or Start your studio.
 
 ## New in v2.1
 
@@ -47,13 +52,14 @@ Time pauses at stage choices, industry bulletins, events, and dialogs. Play spee
 npm test
 ```
 
-Twenty-one tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles, and sales-chart accounting and edge cases. See `VERIFICATION.md` for browser checks and their limits.
+Twenty-four tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles, and sales-chart accounting and edge cases. See `VERIFICATION.md` for browser checks and their limits.
 
 ## Files
 
 - `engine.js`: deterministic simulation and versioned save validation.
 - `app.js`: office HUD, planning, management dialogs, save/load and controls.
 - `office.js`: original procedural office artwork and animation.
+- `names.js`: topic-aware cosmetic name suggestions and duplicate avoidance.
 - `sales.js`: accessible weekly bar-chart rendering and sales summaries.
 - `framework.html`: editable game framework and phone-industry adaptation outline.
 - `hardware.js`: original SVG hardware-parody artwork.

@@ -49,3 +49,8 @@ Version 2 was published to https://jamespond298.github.io/afterlight-studio/. Th
 
 Version 2.1 public verification: Pages run #6 completed successfully (https://github.com/JamesPond298/afterlight-studio/actions/runs/41342377432). The live browser completed Orbit Courier's stages, an event, the renamed Nintenda launch bulletin, bug fixing, an 8.0 review reveal, and four sales weeks. The live chart recorded 1,639 / 1,229 / 901 / 656 copies, totaling 4,425 and $43,365 net receipts. Empty charts use only distinct endpoint tick labels. This last presentation adjustment is checked by the sales tests.
 
+
+## Version 2.2 name generators
+
+All 24 tests pass, including name-field length limits, topic/genre context, and duplicate fallback under repeated random values. Browser checks exercised title reroll with keyboard, random topic/genre with live budget updates, engine naming, and studio/founder naming. Generated values remained editable and no form submitted while rerolling. At 390 x 844 the document and scroll widths both measured 390 pixels. No browser warnings or errors were reported. Name suggestions do not consume the simulation random seed.
+
