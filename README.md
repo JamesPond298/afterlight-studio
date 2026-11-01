@@ -1,55 +1,59 @@
-# Afterlight — Studio Stories
-
-An original, self-contained browser game about building an independent game studio. The sunlit loft, fictional platforms, story, events, visual identity, numbers, and progression are original. There are no third-party art, font, JavaScript, or runtime dependencies.
-
-## Play
+# Afterlight — Studio Tycoon v2
 
 Play online: https://jamespond298.github.io/afterlight-studio/
 
+A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Names, dialogue, event content, artwork, formulas, and balancing are original.
 
-Open `index.html` in a modern browser. For consistent browser storage and testing, install Node.js 20 or later, open a terminal in this directory, and run:
+## What changed in v2
+
+- A full-screen interactive isometric office with animated developers, floating design/technology points, and four visibly different office tiers.
+- Three development stages, with nine separately prioritized areas: Engine, Gameplay, Story, Dialogue, Level design, AI, World design, Graphics, and Sound.
+- Per-area developer assignments, design/technology skills, energy, training, vacations, levels, salaries, and severance.
+- Six genres, sixteen topics, four game sizes, target audiences, sequels, marketing, and multiplatform releases.
+- Twenty-three research items. Research features, build a named custom engine, then select its features during development. Excess feature workload slows production.
+- Twenty-four fictional hardware parodies, with original illustrations, recognizable generational designs, launch announcements, licenses, audience and genre strengths, changing market shares, and retirement windows.
+- Bug fixing before launch, four separate review publications, 20-week sales charts, chart positions, profit tracking, and game reports that reveal useful planning knowledge.
+- Timed contracts with actual design/technology targets and deadline penalties. A one-time rescue loan, studio insolvency, and nine achievements.
+- A 32-year campaign anniversary and continued sandbox play.
+- Autosave, export/import, and migration of version 1 finances and released catalog. Unfinished v1 work is closed during migration; old saves remain under their original browser storage key.
+
+## Run locally
+
+Open `index.html` in a modern browser, or use Node.js 20 or later:
 
 ```sh
 npm start
 ```
 
-Visit <http://127.0.0.1:4173>. Stop the preview with Ctrl+C. No installation step is needed. The application itself is static and needs no server after deployment beyond ordinary file hosting.
+Open http://127.0.0.1:4173. No dependency installation, API keys, accounts, or build step are needed. Browser storage belongs to the website origin; export before moving between hosts or devices.
 
-## The game
+## Play
 
-- Six genres, eight themes, three fictional platforms, and three scopes.
-- Plan a title, concept, normalized development focus, and marketing budget.
-- Weekly development and optional polish; bugs, morale, specialist experience, craft, and concept fit affect results.
-- Release reports explain focus fit, theme bonuses, bugs, and repeated-concept penalties.
-- Six recruitable collaborators, training, three workspaces, and eight research improvements.
-- Twelve original community events with affordable alternatives. Event choices pause time.
-- Quarterly audience trends, 16-week sales tails, operating costs, contract work, and a one-time rescue fund.
-- Five milestone goals; a five-year anniversary and continued sandbox play. Insolvency ends a studio after its rescue fund is exhausted.
-- Local autosave, JSON export/import, corrupt-save checks, and confirmation before replacing a studio.
-- Responsive layouts, keyboard-accessible native controls, dialog focus, reduced-motion support, and no real-time waiting requirement.
+Choose Develop, then a topic, genre, platform, size, and engine. At each stage, the three sliders divide one time budget. Assign developers and optionally enable engine features. Watch the team work, fix bugs, and release. Reviews affect demand; sales arrive over 20 weeks. Generate reports to discover effective combinations and genre priorities. Use research and custom engines to keep improving.
 
-### A good first project
+A rested founder can handle the smallest contract. Staffed studios should research larger projects and keep a payroll reserve before hiring. Larger contracts require sufficient team output. Research, office moves, and engines all consume money and time.
 
-Create a Small Botanical / Cozy game on OpenDesk. Use genre guidance. Advance nine development weeks, resolve community letters, and polish until bugs reach zero. Release, then advance time to collect sales. Try a Clockwork / Tactics concept next. Use commissions between releases if cash becomes tight. Keep reserves before recruiting; salaries are paid every week.
+Time pauses at stage choices, industry bulletins, events, and dialogs. Play speed controls are in the upper-right corner. Keyboard: Space toggles play/pause; 1, 2, and 3 choose speed when a form is not focused.
 
-Autosaves belong to the current browser and website origin. Export before switching browsers, devices, file paths, or hosts. Private browsing and disabled storage may prevent persistence; the game displays an export reminder when saving fails. Imported files are data, never executable code. Saves are local and are not synchronized online.
-
-## Verify
+## Checks
 
 ```sh
 npm test
 ```
 
-The Node test suite checks release/polish/sales accounting, event pauses, invalid budgets and locked scope, staff/research/workspace progression, save roundtrips, corrupt data, rescue/insolvency, quality tradeoffs, and 30 seeded five-year campaigns.
+Sixteen tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles. See `VERIFICATION.md` for browser checks and their limits.
 
-See `VERIFICATION.md` for actual checks and limits, `RESEARCH.md` for design research, and `DEPLOYMENT.md` for exact GitHub Pages instructions.
+## Files
 
-## Source map
+- `engine.js`: deterministic simulation and versioned save validation.
+- `app.js`: office HUD, planning, management dialogs, save/load and controls.
+- `office.js`: original procedural office artwork and animation.
+- `hardware.js`: original SVG hardware-parody artwork.
+- `style.css`: desktop and phone UI.
+- `tests/`: simulation, career, and hardware checks.
+- `server.cjs`: local-only preview helper.
+- `HARDWARE.md`: hardware parody/inspiration reference.
+- `DEPLOYMENT.md`: GitHub Pages publishing instructions.
+- `RESEARCH.md`: genre and hardware research, plus independent design choices.
 
-`engine.js`: deterministic, serializable simulation. `app.js`: UI, dialogs, storage, import/export, and simulation controls. `style.css`: responsive design. `assets/`: original vector assets. `tests/`: simulation tests. `server.cjs`: local-only preview helper.
-
-## Deployment status
-
-Public source repository: https://github.com/JamesPond298/afterlight-studio. GitHub Pages is enabled and serves the static game from the main branch and repository root. The public game was verified through project creation, an event, polishing, release, sales, and save restoration. See the deployment guide for publishing and update instructions.
-
-
+The public repository is https://github.com/JamesPond298/afterlight-studio. Pages publishes from `main` and `/ (root)`. The game runs entirely on the player's browser; saves are not uploaded or synchronized.

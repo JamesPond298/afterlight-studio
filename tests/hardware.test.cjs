@@ -1,0 +1,3 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),E=require('../engine.js');
+require('../hardware.js');
+test('all 24 platforms have valid original vector art and lifecycles',()=>{assert.equal(E.platforms.length,24);assert.equal(new Set(E.platforms.map(p=>p.id)).size,24);for(const p of E.platforms){assert.ok(p.end>p.start);assert.ok(p.maker&&p.inspiration&&p.style);const markup=globalThis.Hardware.art(p);assert.match(markup,/data:image\/svg\+xml/);assert.match(markup,/alt="Original/);const source=decodeURIComponent(markup.match(/src="([^"]+)"/)[1].split(',')[1]);assert.match(source,/<svg/);assert.match(source,/<\/svg>/);}});

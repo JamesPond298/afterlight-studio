@@ -10,8 +10,8 @@ This project has no build step and uses relative asset paths, so it works at a G
 
 1. Sign in to <https://github.com>. Open <https://github.com/new>.
 2. Owner: your account (the connected account observed in this session was `JamesPond298`). Repository name: `afterlight-studio`. Select **Public**. Click **Create repository**. If that name already exists, choose another name and use it in the final URL.
-3. On the empty repository page choose **uploading an existing file**. Upload the **contents** of the extracted `afterlight-studio` folder, including `assets` and its files. `index.html`, `app.js`, `engine.js`, and `style.css` must be at the repository root, not nested inside another folder. Do not upload the ZIP file itself. The documentation, tests, package file, and preview server may also be included.
-4. Enter a commit message such as `Add Afterlight studio simulator`, and click **Commit changes**. Use the default `main` branch.
+3. On the empty repository page choose **uploading an existing file**. Upload the **contents** of the extracted `afterlight-studio` folder, including `assets` and its files. `index.html`, `app.js`, `engine.js`, `office.js`, `hardware.js`, and `style.css` must be at the repository root, not nested inside another folder. Do not upload the ZIP file itself. The documentation, tests, package file, and preview server may also be included.
+4. Enter a commit message such as `Add Afterlight studio tycoon`, and click **Commit changes**. Use the default `main` branch.
 5. Open the repository **Settings → Pages**. Under **Build and deployment**, select **Deploy from a branch**. Select branch **main**, folder **/ (root)**, then **Save**.
 6. Wait for the Pages deployment to finish. The **Actions** tab shows the `pages build and deployment` run. Return to **Settings → Pages** and use **Visit site**.
 7. The expected URL for the account and name above is `https://JamesPond298.github.io/afterlight-studio/`. This destination was deployed and verified in the browser. For a different account or repository, use the actual URL GitHub displays.
@@ -26,7 +26,7 @@ Open a terminal in the extracted project folder. Authenticate interactively; nev
 gh auth login
 git init -b main
 git add .
-git commit -m "Add Afterlight studio simulator"
+git commit -m "Add Afterlight studio tycoon"
 gh repo create afterlight-studio --public --source=. --remote=origin --push
 gh api --method POST repos/{owner}/afterlight-studio/pages -f 'source[branch]=main' -f 'source[path]=/'
 gh api repos/{owner}/afterlight-studio/pages --jq .html_url
@@ -45,4 +45,5 @@ If Pages is already enabled, skip the POST and inspect the existing settings. If
 - Later changes: upload/commit replacement files to `main`; branch-based Pages republishes automatically. Browser autosaves remain associated with the same origin and save version.
 
 GitHub documentation: [Configure a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
 

@@ -1,37 +1,27 @@
-# Research and original design decisions
+# Design research — Afterlight Studio Tycoon v2
 
-Research conducted November 1, 2026. This is a genre analysis, not a reconstruction of another game's source, mathematical rules, or content. No original game's files, screenshots, dialogue, art, or events are included.
+Research reviewed November 1, 2026. Version 2 responds to the request for a much closer office-based tycoon experience while retaining original creative content and independent numerical rules.
 
-## What the reference experience teaches
+## Sources and interpretation
 
-Greenheart's official description connects game creation, development priorities, technology, team building, larger projects, and late-stage research. It also describes a casual single-player experience without monetized waiting. The useful design lesson is a loop of decisions, feedback, and reinvestment with a sense of increasing creative capability. [Official Game Dev Tycoon overview](https://www.greenheartgames.com/app/game-dev-tycoon/).
+The [official Greenheart overview](https://www.greenheartgames.com/app/game-dev-tycoon/) and [official Steam page](https://store.steampowered.com/app/239820/Game_Dev_Tycoon/) establish the broad loop: make games, choose development priorities, study reports, research technology, build engines, recruit and train staff, and take on larger projects. Those broad functional concepts inform this simulator.
 
-The official Steam product page was reviewed for the feature presentation and player-facing framing. It is a primary description of the game; it is not evidence for hidden scoring equations. [Steam product page](https://store.steampowered.com/app/239820/Game_Dev_Tycoon/).
+First-hand player discussions on the developer's forum describe why slider feedback, reports, and contextual character menus matter: [Slider Basics](https://forum.greenheartgames.com/t/my-game-dev-tycoon-tutorial-slider-basics/5700), [Game Reports](https://forum.greenheartgames.com/t/question-about-game-reports/8899), and [Gameplay FAQ](https://forum.greenheartgames.com/t/game-dev-tycoon-f-a-q/10127). These are qualitative UX evidence, not authority for reproducing another game's hidden formulas. Community wiki excerpts were consulted for the general development/research loop; direct retrieval was sometimes blocked.
 
-Community documentation describes staged time allocation, technology/design/research production, bug handling, and game scope. This is secondary, version-sensitive evidence for the broad loop. Full direct retrieval was blocked; searchable excerpts were available. No exact ratios or formulas from that game were used. [Development overview](https://gamedevtycoon.fandom.com/wiki/Game).
+For hardware progression, primary manufacturer histories were reviewed: [Nintendo](https://www.nintendo.com/au/about/history/), [Nintendo company history](https://press.nintendo.com/CompanyHistory), [PlayStation](https://www.playstation.com/en-us/playstation-history/1994-ps-one/), and [Xbox](https://news.xbox.com/en-us/2021/12/13/xbox-docuseries-power-on-release/amp/). These support a recognizable sequence of cartridge, handheld, optical-disc, 3D, online, touch, motion, hybrid, and SSD-era hardware. Afterlight compresses and fictionalizes the chronology. See HARDWARE.md for the parody reference table.
 
-Community guidance highlights unlock dependencies and marketing timing. Its practical UX implication is that players should understand why something is locked and should be able to budget before committing. [General information and hints](https://gamedevtycoon.fandom.com/wiki/General_Info_%26_Hints), [Unlocks](https://gamedevtycoon.fandom.com/wiki/Unlocks), [Community success guide](https://gamedevtycoon.fandom.com/wiki/Success_Guild_updated_for_1.7.8). These pages were available through search excerpts; direct Fandom access was blocked.
+## Independent implementation
 
-Greenheart's blog archive describes incorporating player feedback and critique. For this project, the original interpretation is to expose useful release feedback instead of asking the player to reverse-engineer outcomes. [Developer blog archive](https://www.greenheartgames.com/blog/).
+The office is a procedural vector scene with four workspace tiers, clickable developers, energy meters and point bubbles. It does not use screenshots, sprites, textures, room geometry, music, logos, or extracted files from another game. Original hardware drawings evoke recognizable product categories without using real product artwork or logos.
 
-## Afterlight's separate identity
+The three development stages cover nine common development disciplines. Each stage normalizes three user-controlled time allocations. Developer assignments influence design/technology output through skill, speed, energy and area experience. Optional features only come from the selected custom engine; excessive feature load slows production. These are independently written rules with original weights and thresholds.
 
-The campaign concerns an arts-oriented independent label in a fictional contemporary creative community. It begins in a shared loft, grows through an independent studio and campus, and measures success with catalog, fans, financial reserves, and creative milestones. It does not replay historical hardware or another game's garage-to-industry storyline.
+The quality function combines stage-priority fit, topic compatibility, production output relative to game scope/era, engine features and age, polish, and shipped bugs. Four original review publications add small seeded variations. Sales depend on review performance, scope, platform reach and market share, target-audience fit, genre affinity, hype, trends, franchise history, and recent repetition. Sales receipts arrive over 20 weeks, less a storefront share. Rent and payroll continue throughout production, research, engine work and vacations.
 
-The player controls three original creative priorities: vision/storytelling, systems/game feel, and atmosphere/presentation. Genre guidance is visible. Focus is normalized, and the result reports a fit percentage. This replaces hidden memorization with an explicit planning tradeoff.
+Reports reveal topic fit and genre priorities in later planning dialogs. The player learns within the game. Research has explicit release/workspace requirements. Platform launch and retirement bulletins pause time; community/industry events offer original decisions. Contracts test actual output against a deadline, rather than guaranteeing free money.
 
-Original themes include Botanical, Orbital, Folklore, Culinary, Oceanic, Clockwork, Neon, and Letters. The fictional OpenDesk, PocketLeaf, and Prism platforms have transparent costs and unlock conditions. Community letters concern libraries, festivals, preservation, translation, ceramic collaborations, and local creative work. Both event choices give something useful; spending creates a larger community benefit.
+The original 32-year campaign has workshop, brickworks studio, skyline floor and research campus tiers. It uses original launch schedules, prices, license costs, audience preferences, events, review wording, achievements, salary values and balancing rules. A one-time rescue loan gives struggling studios one opportunity to recover; continued insolvency ends the run.
 
-All SVG imagery, the Afterlight mark, CSS cover art, prose, unlock thresholds, formulas, and balancing values were created for this project. Assets are code-authored vectors; image generation was unnecessary for this visual style.
+## Verification approach
 
-## Simulation and balance
-
-- Seeded randomness drives bug generation, event selection, and quarterly trends. A saved seed makes resumed outcomes consistent.
-- Quality combines normalized focus fit, thematic coherence, accumulated craft, team experience, research, polish, and shipped bugs. It is capped at 9.8/10; there is no hidden comparison against the player's previous best.
-- Scope, platform reach, marketing, quality, community size, trends, research, and recent repetition affect demand. Sales are spread over 16 weeks and storefront receipts retain 70% of revenue.
-- Weekly rent and salaries create a reason to release or take commissions. Payroll continues during rest, training, and polishing.
-- Morale affects craft production. Staff specialties affect the usefulness of their skills for the current development priorities.
-- Short projects provide a forgiving opening. Medium scope unlocks after two releases. Flagships require a campus and three staff; the risk is a larger budget and longer overhead exposure.
-- A one-time rescue grant lets a struggling player recover. A second insolvency ends the run. The five-year milestone records a legacy and allows continued play rather than forcing an abrupt ending.
-
-The 30-seed automated campaign check establishes that a reasonable release/reinvestment strategy can remain solvent and reach the anniversary. It is not a claim of exhaustive balance or long-term user testing. Real player feedback may justify later tuning.
+Unit and seeded simulation checks cover independent mechanics rather than claiming parity with another commercial title. Thirty opening campaigns and four complete 32-year careers establish viable strategies. Browser testing checks the complete player-facing path. These checks support playability and regression prevention, not exhaustive human balance testing.

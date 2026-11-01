@@ -1,26 +1,37 @@
-# Verification record
+# Version 2 verification
 
-November 1, 2026.
+November 1, 2026. The former dashboard has been replaced by an office-centered studio management game.
 
-## Passed
+## Automated checks
 
-- JavaScript syntax checks for the UI and simulation.
-- Eight automated test cases, including 30 seeded five-year campaign simulations.
-- Actual browser: welcome dialog → project planning → valid budget preview → title entry → development starts.
-- Actual browser: first community letter pauses time; low-cost choice resumes the studio.
-- Actual browser: nine-week project completes, five polish weeks remove bugs, release report gives 8.3/10 and 100% focus fit.
-- Actual browser: first sales week records 2,908 copies and $24,427 in net receipts in the tested run.
-- Actual browser: reload restores week 16, $121,677, 715 fans, and the released catalog.
-- Desktop dashboard visually inspected at a 1440 × 1000 viewport; screenshot supplied separately in the outputs folder.
-- Phone dashboard visually inspected at 390 × 844; measured layout width and scroll width both 375 CSS pixels, with no page-level horizontal overflow. The navigation itself intentionally scrolls.
+All 16 tests pass:
 
-## Publishing result
+- Three distinct development plans, paused stage boundaries, bug fixing, four reviews, and exact sales accounting.
+- Development priorities materially affect quality.
+- Event index zero and all other events pause time correctly; paid options respect available cash.
+- Timed research, custom engine construction, and per-stage engine features.
+- Scope, audience, platform, topic, staff-assignment, and engine-feature validation.
+- Reports reveal topic/genre fit and genre priorities.
+- Contracts can succeed or fail, including financial penalties.
+- Office upgrades, hiring capacity, training, vacations, and severance.
+- Hardware launch bulletins, retirements, and changing market shares.
+- Marketing, sequels, and multiplatform licensing.
+- Version 2 save roundtrips, malformed-data rejection, and v1 migration.
+- One-time rescue and final insolvency.
+- A 32-year anniversary with continued play.
+- Thirty seeded eight-release opening campaigns remain financially viable.
+- Four complete 32-year careers use research, engines, staff, larger projects, reserves, and vacations without insolvency or rescue loans.
+- All 24 hardware entries have unique IDs, valid lifecycles, and valid original vector image markup.
 
-The initial session supplied a repository-ready fallback while the browser was signed out. After the user signed in and requested deployment, the public repository JamesPond298/afterlight-studio was created through GitHub. Pages was enabled from main and / (root). The initial Pages workflow completed successfully in 49 seconds: https://github.com/JamesPond298/afterlight-studio/actions/runs/41335485330. Live site: https://jamespond298.github.io/afterlight-studio/. Public-site browser checks completed project creation, the accessibility meetup event, 14 weeks of development/polish, an 8.3/10 release with no bugs, the first sales week, and a successful reload restoring week 16, $121,686 and 720 fans. No browser errors or warnings were recorded.
+JavaScript syntax checks pass for engine.js, app.js, office.js, and hardware.js.
+
+## Browser verification
+
+The local rebuilt UI completed a game concept, a slider adjustment, three separate development stage decisions, an original event, a platform launch bulletin, bug fixing, and a four-publication release reveal. The test release earned 8.5/10 with 20 design, 23 technology and no shipped bugs. Sales arrived afterward.
+
+The UI also completed Custom engine architecture research, Layered pixel renderer research, and construction of Firefly Engine with the researched graphics feature. The engine appeared in the engine catalog. The platform market showed all 24 original hardware illustrations in its timeline, with active-platform market shares and license costs. Clicking the creator in the canvas opened the developer management dialog. Version 2 export/import succeeded, restoring the studio and Firefly Engine. Phone checks at 390 × 844 found document width and scroll width both 390 pixels, with no horizontal page overflow; the game-planning form and hardware cards were visually inspected. The checked browser reported no errors or warnings. The public deployment outcome is recorded in the deployment chat.
 
 ## Limits
 
-Automated tests cover simulation and save validation, not every browser interaction. Browser QA used one modern browser engine, not a full cross-browser/device matrix. Save export and import were also completed in the browser, including the replacement confirmation. Research spending and recruitment were verified through the UI, and the browser reported no warnings or errors during the checked session. The game is client-side and saves locally; there is no multi-device cloud synchronization.
-
-
+Seeded career checks establish viable strategies; they are not exhaustive balance or human playtesting. The browser session covers one modern browser engine, not a full device/browser matrix. Game saves remain local to each origin. The game uses fictional hardware lifetimes, compressed dates, original numerical rules, and original review/event text; it is not a historical database or a reconstruction of another game's code.
 
