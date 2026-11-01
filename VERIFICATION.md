@@ -46,3 +46,6 @@ Seeded career checks establish viable strategies; they are not exhaustive balanc
 ## Public deployment
 
 Version 2 was published to https://jamespond298.github.io/afterlight-studio/. The initial v2 Pages run completed successfully: https://github.com/JamesPond298/afterlight-studio/actions/runs/41339293207. Public browser verification completed a new game concept, a prototype slider adjustment, a production week generating design/technology points, and reload restoration. All 24 hardware timeline illustrations loaded successfully and the checked browser reported no warnings or errors.
+
+Version 2.1 public verification: Pages run #6 completed successfully (https://github.com/JamesPond298/afterlight-studio/actions/runs/41342377432). The live browser completed Orbit Courier's stages, an event, the renamed Nintenda launch bulletin, bug fixing, an 8.0 review reveal, and four sales weeks. The live chart recorded 1,639 / 1,229 / 901 / 656 copies, totaling 4,425 and $43,365 net receipts. Empty charts use only distinct endpoint tick labels. This last presentation adjustment is checked by the sales tests.
+

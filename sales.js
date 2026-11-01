@@ -13,7 +13,7 @@
   function render(g,{compact:small=false,metric='units'}={}){
     if(g.age>0&&g.weekly.length===0&&g.sold>0)return '<p class="help sales-legacy">This imported release has lifetime totals but no saved weekly breakdown.</p>';
     const data=rows(g,metric),width=small?220:720,height=small?123:285,left=small?33:65,right=small?5:18,top=small?10:24,bottom=small?25:44,plotW=width-left-right,plotH=height-top-bottom,max=scaleMax(Math.max(0,...data.map(r=>r.value))),slot=plotW/20,gap=small?2:5;
-    const fmt=v=>(metric==='revenue'?'$':'')+compact(v),ticks=small?[0,1]:[0,.25,.5,.75,1];
+    const fmt=v=>(metric==='revenue'?'$':'')+compact(v),ticks=small||max<4?[0,1]:[0,.25,.5,.75,1];
     const grid=ticks.map(f=>{const y=top+(1-f)*plotH;return `<line x1="${left}" x2="${width-right}" y1="${y}" y2="${y}" stroke="#c7d4c2" stroke-width="1" ${f?'stroke-dasharray="3 4"':''}/><text x="${left-6}" y="${y+3}" text-anchor="end" class="sales-axis">${esc(fmt(max*f))}</text>`;}).join('');
     const bars=data.map((r,i)=>{const x=left+i*slot+gap/2,h=r.recorded?Math.max(r.value>0?2:0,r.value/max*plotH):plotH,y=top+plotH-h,label=r.recorded?`Week ${r.week}: ${r.units.toLocaleString('en-US')} copies; ${cash(r.units*g.price*.7)} net receipts`:`Week ${r.week}: not yet recorded`;
       return `<rect class="sales-bar ${r.recorded?'recorded':'future'} ${i===g.weekly.length-1?'latest':''}" x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${Math.max(1,slot-gap).toFixed(2)}" height="${h.toFixed(2)}" rx="${small?1:3}" tabindex="0" role="img" aria-label="${esc(label)}" data-week="${r.week}" data-units="${r.units}" data-value="${r.value}" data-recorded="${r.recorded}" data-tip="${esc(label)}"><title>${esc(label)}</title></rect>`;
