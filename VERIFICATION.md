@@ -1,10 +1,10 @@
-# Version 2 verification
+# Version 2.1 verification
 
 November 1, 2026. The former dashboard has been replaced by an office-centered studio management game.
 
 ## Automated checks
 
-All 17 tests pass:
+All 21 tests pass:
 
 - Three distinct development plans, paused stage boundaries, bug fixing, four reviews, and exact sales accounting.
 - Development priorities materially affect quality.
@@ -24,13 +24,19 @@ All 17 tests pass:
 - Four complete 32-year careers use research, engines, staff, larger projects, reserves, and vacations without insolvency or rescue loans.
 - All 24 hardware entries have unique IDs, valid lifecycles, and valid original vector image markup.
 
-JavaScript syntax checks pass for engine.js, app.js, office.js, and hardware.js.
+Four sales checks cover actual and future weeks, transaction reconciliation, zero and very large values, escaped release titles, and honest handling of legacy releases without weekly history.
+
+JavaScript syntax checks pass for engine.js, app.js, office.js, hardware.js, and sales.js.
 
 ## Browser verification
 
 The local rebuilt UI completed a game concept, a slider adjustment, three separate development stage decisions, an original event, a platform launch bulletin, bug fixing, and a four-publication release reveal. The test release earned 8.5/10 with 20 design, 23 technology and no shipped bugs. Sales arrived afterward.
 
 The UI also completed Custom engine architecture research, Layered pixel renderer research, and construction of Firefly Engine with the researched graphics feature. The engine appeared in the engine catalog. The platform market showed all 24 original hardware illustrations in its timeline, with active-platform market shares and license costs. Clicking the creator in the canvas opened the developer management dialog. Version 2 export/import succeeded, restoring the studio and Firefly Engine. Phone checks at 390 × 844 found document width and scroll width both 390 pixels, with no horizontal page overflow; the game-planning form and hardware cards were visually inspected. The checked browser reported no errors or warnings. The public deployment outcome is recorded in the deployment chat.
+
+## Version 2.1 browser checks
+
+The Sales dialog displayed ten recorded weeks and ten future placeholders for Star Cartographer. Copies totaled 6,177 and net receipts $60,535. Switching to net receipts updated the scale; keyboard focus on week one exposed 1,525 copies and $14,945. The expanded ledger matched the chart and cumulative totals. Selecting a migrated release showed its lifetime totals and explicitly stated that weekly history was unavailable. At 390 × 844, document width and scroll width both measured 390 pixels; the chart and two-column totals were visually inspected. No warnings or errors were reported. The editable framework opened successfully as a standalone eight-section HTML document.
 
 ## Limits
 

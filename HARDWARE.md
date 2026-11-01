@@ -4,30 +4,30 @@ Afterlight uses an original, compressed 32-year industry timeline. These are fic
 
 | Afterlight platform | Familiar inspiration |
 | --- | --- |
-| Slate Micro | Early keyboard-based home computers / IBM-compatible era |
-| Comfy 64 | Commodore 64 era |
-| Ninbento 8 | NES / Famicom era |
-| GamePal | Game Boy |
-| MegaStride 16 | Sega Mega Drive / Genesis |
-| Vector PC | Evolving open PC hardware |
-| Super Ninbento | Super NES / Super Famicom |
-| PlayCrate | Original PlayStation |
-| Ninbento 64 | Nintendo 64 |
-| GamePal Colour | Game Boy Color |
-| DreamDeck | Sega Dreamcast |
-| PlayCrate 2 | PlayStation 2 |
-| X-Cube | Original Xbox |
-| Ninbento Lunchbox | Nintendo GameCube |
-| Ninbento Twin | Nintendo DS |
-| PlayCrate Portable | PSP |
-| X-Cube Revolve | Xbox 360 |
-| Ninbento Wave | Wii |
-| PlayCrate 3 | PlayStation 3 |
-| PlayCrate 4 | PlayStation 4 |
-| X-Cube OneUp | Xbox One |
-| Ninbento Flip | Nintendo Switch |
-| PlayCrate 5 | PlayStation 5 |
-| X-Cube Series Q | Xbox Series X generation |
+| IBN PC | Early keyboard-based home computers / IBM-compatible era |
+| Commodora 64 | Commodore 64 era |
+| Nintenda Entertainment System | NES / Famicom era |
+| GameBoi | Game Boy |
+| Mega Drive 16 | Sega Mega Drive / Genesis |
+| PC Compatible | Evolving open PC hardware |
+| Super Nintenda | Super NES / Super Famicom |
+| PlayStasion | Original PlayStation |
+| Nintenda 64 | Nintendo 64 |
+| GameBoi Color | Game Boy Color |
+| Dreamkast | Sega Dreamcast |
+| PlayStasion 2 | PlayStation 2 |
+| Xboks | Original Xbox |
+| GameQube | Nintendo GameCube |
+| Nintenda DS | Nintendo DS |
+| PlayStasion Portable | PSP |
+| Xboks 360 | Xbox 360 |
+| Whee | Wii |
+| PlayStasion 3 | PlayStation 3 |
+| PlayStasion 4 | PlayStation 4 |
+| Xboks One | Xbox One |
+| Swytch | Nintendo Switch |
+| PlayStasion 5 | PlayStation 5 |
+| Xboks Series X | Xbox Series X generation |
 
 The timeline includes different hardware formats rather than treating every release as the same market multiplier: home computers, cartridges, monochrome/color handhelds, optical discs, analog 3D consoles, online systems, dual screens, widescreen portables, motion controls, hybrids, and fast-storage consoles.
 

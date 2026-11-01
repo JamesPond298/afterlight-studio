@@ -25,3 +25,9 @@ The original 32-year campaign has workshop, brickworks studio, skyline floor and
 ## Verification approach
 
 Unit and seeded simulation checks cover independent mechanics rather than claiming parity with another commercial title. Thirty opening campaigns and four complete 32-year careers establish viable strategies. Browser testing checks the complete player-facing path. These checks support playability and regression prevention, not exhaustive human balance testing.
+
+## Version 2.1 follow-up research
+
+Additional developer-forum discussions address [selected features and reports](https://forum.greenheartgames.com/t/question-about-selected-features/20504) and [interaction with a sales graph](https://forum.greenheartgames.com/t/aaa-and-mmo-help-me-please/18684). These are qualitative first-hand discussions, not a specification of hidden demand formulas or the exact chart format. The new bar chart is an independently implemented response to the requested weekly sales view.
+
+The editable `framework.html` expands the research into a reusable company simulation and proposed cell phone business. It includes twelve linked references from Greenheart, Motorola, Nokia, the Computer History Museum, Apple, Google, and GSMA. It distinguishes current features from proposed adapters, inventory, carriers, suppliers, returns, support, and competitive market modeling. The phone game has not yet been implemented.

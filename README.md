@@ -1,10 +1,16 @@
-# Afterlight — Studio Tycoon v2
+# Afterlight — Studio Tycoon v2.1
 
 Play online: https://jamespond298.github.io/afterlight-studio/
 
-A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Names, dialogue, event content, artwork, formulas, and balancing are original.
+A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Near-name hardware parodies, dialogue, event content, artwork, formulas, and balancing are original.
 
-## What changed in v2
+## New in v2.1
+
+- Weekly sales bar charts in the office and a dedicated Sales report for every release. Switch between copies and net receipts, inspect each week, and expand the exact weekly ledger. Totals include receipts, release profit, last-week performance, and peak week.
+- Closer hardware names such as Nintenda, PlayStasion, Xboks, GameBoi, and Swytch. Internal IDs remain unchanged for save compatibility.
+- An eight-page research-backed [editable framework](framework.html) for the studio simulator and a proposed cell phone company adaptation. The phone game is a design outline, not an implemented mode.
+
+## Core game
 
 - A full-screen interactive isometric office with animated developers, floating design/technology points, and four visibly different office tiers.
 - Three development stages, with nine separately prioritized areas: Engine, Gameplay, Story, Dialogue, Level design, AI, World design, Graphics, and Sound.
@@ -41,13 +47,15 @@ Time pauses at stage choices, industry bulletins, events, and dialogs. Play spee
 npm test
 ```
 
-Seventeen tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles. See `VERIFICATION.md` for browser checks and their limits.
+Twenty-one tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles, and sales-chart accounting and edge cases. See `VERIFICATION.md` for browser checks and their limits.
 
 ## Files
 
 - `engine.js`: deterministic simulation and versioned save validation.
 - `app.js`: office HUD, planning, management dialogs, save/load and controls.
 - `office.js`: original procedural office artwork and animation.
+- `sales.js`: accessible weekly bar-chart rendering and sales summaries.
+- `framework.html`: editable game framework and phone-industry adaptation outline.
 - `hardware.js`: original SVG hardware-parody artwork.
 - `style.css`: desktop and phone UI.
 - `tests/`: simulation, career, and hardware checks.
