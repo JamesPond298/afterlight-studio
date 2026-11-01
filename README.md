@@ -4,6 +4,9 @@ An original, self-contained browser game about building an independent game stud
 
 ## Play
 
+Play online: https://jamespond298.github.io/afterlight-studio/
+
+
 Open `index.html` in a modern browser. For consistent browser storage and testing, install Node.js 20 or later, open a terminal in this directory, and run:
 
 ```sh
@@ -47,5 +50,6 @@ See `VERIFICATION.md` for actual checks and limits, `RESEARCH.md` for design res
 
 ## Deployment status
 
-Public source repository: https://github.com/JamesPond298/afterlight-studio. GitHub Pages serves the static game from the main branch and repository root when enabled. See the deployment guide for publishing and update instructions.
+Public source repository: https://github.com/JamesPond298/afterlight-studio. GitHub Pages is enabled and serves the static game from the main branch and repository root. The public game was verified through project creation, an event, polishing, release, sales, and save restoration. See the deployment guide for publishing and update instructions.
+
 

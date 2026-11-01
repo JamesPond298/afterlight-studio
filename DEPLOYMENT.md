@@ -1,5 +1,9 @@
 # Publish Afterlight on GitHub Pages
 
+Already deployed and verified: https://jamespond298.github.io/afterlight-studio/
+Public repository: https://github.com/JamesPond298/afterlight-studio
+The steps below explain how to reproduce or maintain this deployment.
+
 This project has no build step and uses relative asset paths, so it works at a GitHub project Pages URL.
 
 ## Browser route — no command line required
@@ -10,7 +14,7 @@ This project has no build step and uses relative asset paths, so it works at a G
 4. Enter a commit message such as `Add Afterlight studio simulator`, and click **Commit changes**. Use the default `main` branch.
 5. Open the repository **Settings → Pages**. Under **Build and deployment**, select **Deploy from a branch**. Select branch **main**, folder **/ (root)**, then **Save**.
 6. Wait for the Pages deployment to finish. The **Actions** tab shows the `pages build and deployment` run. Return to **Settings → Pages** and use **Visit site**.
-7. The expected URL for the account and name above is `https://JamesPond298.github.io/afterlight-studio/`. This is an expected destination, **not a verified deployed URL**. Use the actual URL GitHub displays.
+7. The expected URL for the account and name above is `https://JamesPond298.github.io/afterlight-studio/`. This destination was deployed and verified in the browser. For a different account or repository, use the actual URL GitHub displays.
 
 If your account or organization has a policy disabling Pages, enable it through the account administrator or use another authorized public repository. No backend, paid service, API key, or environment variable is needed.
 
@@ -41,3 +45,4 @@ If Pages is already enabled, skip the POST and inspect the existing settings. If
 - Later changes: upload/commit replacement files to `main`; branch-based Pages republishes automatically. Browser autosaves remain associated with the same origin and save version.
 
 GitHub documentation: [Configure a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
