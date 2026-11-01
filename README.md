@@ -41,7 +41,7 @@ Time pauses at stage choices, industry bulletins, events, and dialogs. Play spee
 npm test
 ```
 
-Sixteen tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles. See `VERIFICATION.md` for browser checks and their limits.
+Seventeen tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles. See `VERIFICATION.md` for browser checks and their limits.
 
 ## Files
 
@@ -57,3 +57,4 @@ Sixteen tests cover the simulation, 30 seeded opening campaigns, four complete 3
 - `RESEARCH.md`: genre and hardware research, plus independent design choices.
 
 The public repository is https://github.com/JamesPond298/afterlight-studio. Pages publishes from `main` and `/ (root)`. The game runs entirely on the player's browser; saves are not uploaded or synchronized.
+

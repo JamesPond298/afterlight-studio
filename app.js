@@ -5,7 +5,7 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const money=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(x);
 const num=x=>Math.round(x).toLocaleString('en-US');
 const short=x=>x>=1000000?(x/1000000).toFixed(2)+'M':x>=10000?(x/1000).toFixed(1)+'K':num(x);
-const date=w=>`Y${Math.floor((w-1)/52)+1} M${Math.floor(((w-1)%52)/4.34)+1} W${(w-1)%4+1}`;
+const date=w=>{const n=(w-1)%52,m=Math.min(11,Math.floor(n*12/52));return `Y${Math.floor((w-1)/52)+1} M${m+1} W${n-Math.ceil(m*52/12)+1}`;};
 try{const raw=localStorage.getItem(KEY)||localStorage.getItem('afterlight-save-v1');if(raw){s=E.validate(JSON.parse(raw));restored=true;}}catch{restored=false;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(s));saveOK=true;}catch{saveOK=false;}}
 function toast(text){const el=document.querySelector('#toast');el.textContent=text;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',4500);}
@@ -51,4 +51,5 @@ function bind(scope){scope.querySelectorAll('[data-menu]').forEach(b=>b.onclick=
 document.addEventListener('keydown',e=>{if(modal.open||['INPUT','TEXTAREA','SELECT','BUTTON'].includes(document.activeElement.tagName))return;if(e.code==='Space'){e.preventDefault();setSpeed(speed?0:1);}else if(['1','2','3'].includes(e.key))setSpeed(+e.key);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){pause();save();renderHUD();}});
 shell();if(!restored)welcomeDialog();else if(s.review)reviewDialog(s.review);else processInterrupt();
+
 

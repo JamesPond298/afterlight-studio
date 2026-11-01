@@ -4,10 +4,11 @@ November 1, 2026. The former dashboard has been replaced by an office-centered s
 
 ## Automated checks
 
-All 16 tests pass:
+All 17 tests pass:
 
 - Three distinct development plans, paused stage boundaries, bug fixing, four reviews, and exact sales accounting.
 - Development priorities materially affect quality.
+- Hype earned between projects carries to the next game exactly once.
 - Event index zero and all other events pause time correctly; paid options respect available cash.
 - Timed research, custom engine construction, and per-stage engine features.
 - Scope, audience, platform, topic, staff-assignment, and engine-feature validation.
@@ -35,3 +36,7 @@ The UI also completed Custom engine architecture research, Layered pixel rendere
 
 Seeded career checks establish viable strategies; they are not exhaustive balance or human playtesting. The browser session covers one modern browser engine, not a full device/browser matrix. Game saves remain local to each origin. The game uses fictional hardware lifetimes, compressed dates, original numerical rules, and original review/event text; it is not a historical database or a reconstruction of another game's code.
 
+
+## Public deployment
+
+Version 2 was published to https://jamespond298.github.io/afterlight-studio/. The initial v2 Pages run completed successfully: https://github.com/JamesPond298/afterlight-studio/actions/runs/41339293207. Public browser verification completed a new game concept, a prototype slider adjustment, a production week generating design/technology points, and reload restoration. All 24 hardware timeline illustrations loaded successfully and the checked browser reported no warnings or errors.

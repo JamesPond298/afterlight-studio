@@ -101,7 +101,7 @@
   function fresh(seed=Date.now()) {
     return {version:2,seed:seed>>>0,name:'Afterlight',week:1,cash:65000,fans:0,rp:12,office:0,
       founder:{id:'founder',name:'Alex',role:'Founder',design:38,tech:38,research:45,speed:55,salary:0,color:'#dfae73',energy:100,level:1,xp:0,activity:null},
-      staff:[],tech:[],topics:['Space','Mystery','Racing','Fantasy'],licenses:['slate'],engines:[{id:'starter',name:'Basic toolkit',features:[],week:1}],
+      staff:[],tech:[],buzz:0,topics:['Space','Mystery','Racing','Fantasy'],licenses:['slate'],engines:[{id:'starter',name:'Basic toolkit',features:[],week:1}],
       games:[],project:null,task:null,event:null,nextEvent:19,news:[],announced:[],trend:0,knowledge:{},areaXP:Array(9).fill(0),genreXP:{},
       log:[{week:1,text:'Your workshop is open. $65,000, a borrowed computer, and a blank notebook.'}],history:[65000],achievements:[],rescue:false,ended:false,campaign:false,review:null,lastGain:{d:0,t:0,r:0},contracts:0};
   }
@@ -129,8 +129,8 @@
     const e=estimate(s,d);if(s.cash<e.cost+e.license)return 'Not enough funds for development and licenses.';
     s.cash-=e.cost+e.license;d.platforms.forEach(id=>{if(!s.licenses.includes(id))s.licenses.push(id);});
     s.project={title:String(d.title||'Untitled game').trim().slice(0,50)||'Untitled game',topic:d.topic,genre:d.genre,size:d.size,audience:d.audience,platforms:d.platforms.slice(),engine:d.engine,sequel:d.sequel||null,
-      stage:0,pending:true,stageDone:0,stageWeeks:z.stage,plans:[],design:0,tech:0,bugs:0,hype:0,done:0,polish:0,fit:0,features:[],cost:e.cost+e.license,overhead:0,marketing:[],start:s.week};
-    log(s,'Started '+s.project.title+'.');return null;
+      stage:0,pending:true,stageDone:0,stageWeeks:z.stage,plans:[],design:0,tech:0,bugs:0,hype:s.buzz||0,done:0,polish:0,fit:0,features:[],cost:e.cost+e.license,overhead:0,marketing:[],start:s.week};
+    s.buzz=0;log(s,'Started '+s.project.title+'.');return null;
   }
   function planStage(s,d){
     const p=s.project;if(!p||!p.pending||p.stage>2)return 'No development stage is waiting.';
@@ -156,7 +156,7 @@
   function dismiss(s,id){if(s.project||s.task)return 'Finish current work before changing the team.';if(id==='founder')return 'The founder cannot leave.';const i=s.staff.findIndex(x=>x.id===id);if(i<0)return 'Creator not found.';const cost=s.staff[i].salary*2;if(s.cash<cost)return 'Two weeks of severance pay are required.';s.cash-=cost;log(s,s.staff[i].name+' left the studio.');s.staff.splice(i,1);return null;}
   function upgrade(s){if(busy(s))return 'Finish your current project before moving.';const o=offices[s.office+1];if(!o)return 'Your campus is fully upgraded.';if(s.games.length<o.games)return `Release ${o.games} games before moving.`;if(s.cash<o.cost)return 'Not enough cash for the move.';s.cash-=o.cost;s.office++;log(s,'Moved into '+o.name+'.');s.news.push({title:'A new chapter',text:`The keys to ${o.name} are yours. You now have ${o.desks} creator desks. Weekly rent is $${o.rent.toLocaleString()}.`});return null;}
   function marketGame(s,tier){const p=s.project;if(!p||!s.tech.includes('marketing'))return 'Research marketing, then start a game.';const costs=[3000,12000,45000],gains=[12,30,65];if(![0,1,2].includes(tier))return 'Choose a campaign.';if(p.marketing.includes(tier))return 'This campaign is already running.';if(s.cash<costs[tier])return 'Not enough cash for that campaign.';s.cash-=costs[tier];p.cost+=costs[tier];p.hype+=gains[tier];p.marketing.push(tier);return null;}
-  function choose(s,yes){if(s.event===null)return 'No event is waiting.';const e=events[s.event];if(yes&&s.cash+e.cash<0)return 'Not enough funds for that option.';if(yes){s.cash+=e.cash;s.fans=Math.max(0,s.fans+(e.fans||0));s.rp+=e.rp;team(s).forEach(p=>p.energy=clamp(p.energy+e.energy,10,100));if(s.project){s.project.hype+=e.hype;s.project.bugs=Math.max(0,s.project.bugs+(e.bugs||0));}}else{s.rp+=2;team(s).forEach(p=>p.energy=clamp(p.energy+(e.altEnergy||0),10,100));}log(s,e.title+': '+(yes?e.a:e.b)+'.');s.event=null;return null;}
+  function choose(s,yes){if(s.event===null)return 'No event is waiting.';const e=events[s.event];if(yes&&s.cash+e.cash<0)return 'Not enough funds for that option.';if(yes){s.cash+=e.cash;s.fans=Math.max(0,s.fans+(e.fans||0));s.rp+=e.rp;team(s).forEach(p=>p.energy=clamp(p.energy+e.energy,10,100));if(s.project){s.project.hype+=e.hype;s.project.bugs=Math.max(0,s.project.bugs+(e.bugs||0));}else{s.buzz=(s.buzz||0)+e.hype;}}else{s.rp+=2;team(s).forEach(p=>p.energy=clamp(p.energy+(e.altEnergy||0),10,100));}log(s,e.title+': '+(yes?e.a:e.b)+'.');s.event=null;return null;}
   function workerPower(p){return (.55+p.speed/100)*(.4+p.energy/166);}
   function finishTask(s,t){
     if(t.type==='research'){s.tech.push(t.id);log(s,'Research complete: '+t.name+'.');}
@@ -218,7 +218,7 @@
     if(!validPerson(v.founder)||v.staff.length>7||v.staff.some(x=>!validPerson(x))||new Set(team(v).map(x=>x.id)).size!==team(v).length)fail();
     if(v.topics.some(x=>!has(topics,x))||v.tech.some(x=>!feature(x))||v.licenses.some(x=>!platforms.some(p=>p.id===x))||v.engines.some(x=>!text(x.id)||!text(x.name)||!finite(x.week)||!Array.isArray(x.features)||x.features.some(id=>!Number.isInteger(feature(id)?.area))))fail();
     if(!v.engines.length||!v.knowledge||typeof v.knowledge!=='object'||!v.genreXP||typeof v.genreXP!=='object'||v.areaXP.length!==9||v.areaXP.some(x=>!finite(x))||!Number.isInteger(v.trend)||v.trend<0||v.trend>5||!finite(v.nextEvent))fail();
-    if(v.event!==null&&(!Number.isInteger(v.event)||!events[v.event]))fail();
+    if(v.buzz!==undefined&&(!finite(v.buzz)||v.buzz<0))fail();if(v.event!==null&&(!Number.isInteger(v.event)||!events[v.event]))fail();
     if(v.games.some(g=>!g||!text(g.title)||!text(g.id)||!has(genres,g.genre)||!has(topics,g.topic)||!has(sizes,g.size)||['score','units','sold','revenue','cost','age','price','week','design','tech','fit','ratio'].some(k=>!finite(g[k]))||!Array.isArray(g.reviews)||g.reviews.length!==4||g.reviews.some(r=>!text(r.name)||!finite(r.score))||!Array.isArray(g.weekly)||g.weekly.some(x=>!finite(x))||!Array.isArray(g.platforms)||g.platforms.some(id=>!platforms.some(p=>p.id===id))))fail();
     if(v.project){const p=v.project;if(!text(p.title)||!has(genres,p.genre)||!has(topics,p.topic)||!has(sizes,p.size)||!Number.isInteger(p.stage)||p.stage<0||p.stage>3||!Array.isArray(p.plans)||!Array.isArray(p.features)||!Array.isArray(p.platforms)||!Array.isArray(p.marketing)||!v.engines.some(x=>x.id===p.engine)||['stageDone','stageWeeks','done','design','tech','bugs','hype','fit','cost','overhead','polish','start'].some(k=>!finite(p[k]))||p.stageWeeks<1)fail();if(p.plans.some(q=>!Array.isArray(q.weights)||q.weights.length!==3||q.weights.some(x=>!finite(x))||!Array.isArray(q.assignments)||q.assignments.length!==3||q.assignments.some(id=>!team(v).some(x=>x.id===id))||!finite(q.load)||!finite(q.fit)||!Array.isArray(q.features)||q.features.some(id=>!feature(id))))fail();if(p.plans.length!==p.stage+(p.pending?0:p.stage<3?1:0))fail();}
     if(v.task){const t=v.task;if(!['research','topic','engine','report','contract'].includes(t.type)||!finite(t.left)||!finite(t.total)||!text(t.name))fail();if(t.type==='research'&&!feature(t.id)||t.type==='topic'&&!has(topics,t.id)||t.type==='report'&&!v.games.some(x=>x.id===t.id))fail();if(t.type==='engine'&&(!Array.isArray(t.features)||t.features.some(id=>!Number.isInteger(feature(id)?.area))))fail();if(t.type==='contract'&&['design','tech','need','reward'].some(k=>!finite(t[k])))fail();}
@@ -227,5 +227,7 @@
   const api={genres,areas,stages,topics,platforms,research,people,offices,sizes,events,fresh,team,active,upkeep,available,market,estimate,expected,start,planStage,locked,study,topicResearch,buildEngine,report,contract,hire,personAction,dismiss,upgrade,marketGame,choose,step,launch,validate,log,feature,busy};
   if(typeof module!=='undefined')module.exports=api;root.Afterlight=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
+
+
 
 
