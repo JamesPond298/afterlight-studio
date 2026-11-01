@@ -48,6 +48,7 @@
     {id:'series',name:'Xboks Series X',maker:'Microloft',kind:'SSD-era console',start:1586,end:3000,license:390000,cost:58000,reach:5.8,audience:'Adult',genres:['Action','Simulation'],color:'#5d8c68',style:'monolith',era:'Instant worlds',inspiration:'Minimal dark towers with a top ventilation grid'}
   ];
   platforms.forEach(p=>{const [year,month,region,retire]=calendar.launches[p.id];p.launchYear=year;p.launchMonth=month;p.region=region;p.start=calendar.weekOf(year,month);p.end=calendar.weekOf(retire,1);});
+  platforms.sort((a,b)=>a.start-b.start);
   const research = [
     {id:'enginekit', name:'Custom engine architecture', rp:20, cash:6000, weeks:3, games:1, desc:'Build named engines from researched features.'},
     {id:'pixel', name:'Layered pixel renderer', rp:18, cash:5000, weeks:2, games:1, area:7, power:1.2, complexity:12, desc:'Richer 2D visuals.'},
