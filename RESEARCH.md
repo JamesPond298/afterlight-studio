@@ -31,3 +31,9 @@ Unit and seeded simulation checks cover independent mechanics rather than claimi
 Additional developer-forum discussions address [selected features and reports](https://forum.greenheartgames.com/t/question-about-selected-features/20504) and [interaction with a sales graph](https://forum.greenheartgames.com/t/aaa-and-mmo-help-me-please/18684). These are qualitative first-hand discussions, not a specification of hidden demand formulas or the exact chart format. The new bar chart is an independently implemented response to the requested weekly sales view.
 
 The editable `framework.html` expands the research into a reusable company simulation and proposed cell phone business. It includes twelve linked references from Greenheart, Motorola, Nokia, the Computer History Museum, Apple, Google, and GSMA. It distinguishes current features from proposed adapters, inventory, carriers, suppliers, returns, support, and competitive market modeling. The phone game has not yet been implemented.
+
+## Version 2.3 calendar and learning flow
+
+See TIMELINE.md for primary manufacturer/museum references and the distinction between historical launch anchors and modeled lifecycle values. The previous compressed chronology is superseded. The clock uses four-week months, twelve-month years and a four-second normal-speed week, based on a historical developer-forum modding explanation. Current-version parity is not claimed.
+
+Research now has a deterministic weekly income of one point plus one per complete 100 active-crew research skill, a two-week focused sprint for $1,200 awarding 12 plus one per complete ten active-crew research skill, and unchanged report/release/contract rewards. Vacationing/training creators do not contribute passive research. These are independently chosen balancing rules. Contextual recommendations and milestone pauses address the observed difficulty of finding the next action.

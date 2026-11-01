@@ -54,3 +54,9 @@ Version 2.1 public verification: Pages run #6 completed successfully (https://gi
 
 All 24 tests pass, including name-field length limits, topic/genre context, and duplicate fallback under repeated random values. Browser checks exercised title reroll with keyboard, random topic/genre with live budget updates, engine naming, and studio/founder naming. Generated values remained editable and no form submitted while rerolling. At 390 x 844 the document and scroll widths both measured 390 pixels. No browser warnings or errors were reported. Name suggestions do not consume the simulation random seed.
 
+
+## Version 2.3 checks
+
+All 30 tests pass. Calendar tests cover four-week boundaries, 48-week years, all platform anchors and the 2021 campaign anniversary. Research checks cover deterministic weekly income, absence during vacation, pending-stage pauses, sprint cash/rewards/duration and save roundtrips. Guide checks exercise first-game, report, research and cash-reserve recommendations. Four complete 40-year seeded careers and thirty opening campaigns remain viable. Older v2 saves preserve financial and project state while adopting the calendar once.
+
+Browser testing completed a recommended report: 21 points became 37 over two weeks (14 report + 2 weekly income), then paused automatically. A research sprint raised 37 to 55 in two weeks (16 sprint + 2 weekly income), then paused at the August 1982 Commodora announcement. A new studio used the starter-game shortcut, balanced-stage helper, and Continue working control; time paused at its next stage. Phone inspection at 390 x 844 found matching document/scroll widths of 390, with the project controls and research screen visible and usable. No warnings or errors were reported in the checked preview.

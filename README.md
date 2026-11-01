@@ -1,8 +1,17 @@
-# Afterlight — Studio Tycoon v2.2
+# Afterlight — Studio Tycoon v2.3
 
 Play online: https://jamespond298.github.io/afterlight-studio/
 
 A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Near-name hardware parodies, dialogue, event content, artwork, formulas, and balancing are original.
+
+## New in v2.3
+
+- Research income every active week, a focused two-week research sprint, clearer costs/requirements, and direct access from the research counter.
+- A next-step coach: prepare a starter game, learn from reports, research features, and build an engine. Help is always available in the dock.
+- Continue/Pause work controls inside project panels. Time pauses at stage choices, task completion, the start of polish, all bugs fixed, and staff returning.
+- A real-year timeline starting August 1981. Four weeks per month, twelve months per year; normal speed is four seconds per week. The campaign anniversary is August 2021, followed by continued sandbox play.
+- All 24 platforms use historical reference launch years and regional months. Launches occur in week one of that month. Hardware retirement, licenses, demand and market share remain simulation values. See [TIMELINE.md](TIMELINE.md).
+- Existing saves keep their finances, catalog, projects and elapsed weeks. Display dates and future platform access adopt the new calendar. Owned licenses remain owned; new projects must wait for a platform's new launch date.
 
 ## New in v2.2
 
@@ -25,7 +34,7 @@ A complete rebuild of Afterlight as an office-based game studio tycoon. The live
 - Twenty-four fictional hardware parodies, with original illustrations, recognizable generational designs, launch announcements, licenses, audience and genre strengths, changing market shares, and retirement windows.
 - Bug fixing before launch, four separate review publications, 20-week sales charts, chart positions, profit tracking, and game reports that reveal useful planning knowledge.
 - Timed contracts with actual design/technology targets and deadline penalties. A one-time rescue loan, studio insolvency, and nine achievements.
-- A 32-year campaign anniversary and continued sandbox play.
+- A 40-year campaign anniversary and continued sandbox play.
 - Autosave, export/import, and migration of version 1 finances and released catalog. Unfinished v1 work is closed during migration; old saves remain under their original browser storage key.
 
 ## Run locally
@@ -52,10 +61,12 @@ Time pauses at stage choices, industry bulletins, events, and dialogs. Play spee
 npm test
 ```
 
-Twenty-four tests cover the simulation, 30 seeded opening campaigns, four complete 32-year careers, save migration/validation, and all hardware illustrations/lifecycles, and sales-chart accounting and edge cases. See `VERIFICATION.md` for browser checks and their limits.
+Thirty tests cover the simulation, 30 seeded opening campaigns, four complete 40-year careers, save migration/validation, and all hardware illustrations/lifecycles, and sales-chart accounting and edge cases. See `VERIFICATION.md` for browser checks and their limits.
 
 ## Files
 
+- `calendar.js`: four-week calendar and historical platform anchors.
+- `guidance.js`: contextual next-action recommendations.
 - `engine.js`: deterministic simulation and versioned save validation.
 - `app.js`: office HUD, planning, management dialogs, save/load and controls.
 - `office.js`: original procedural office artwork and animation.

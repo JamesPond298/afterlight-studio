@@ -1,6 +1,6 @@
 # Hardware parody reference
 
-Afterlight uses an original, compressed 32-year industry timeline. These are fictional names and original vector drawings inspired by recognizable real hardware generations. Dates, audiences, market shares, licensing fees, demand, and retirement windows are game-balancing values, not historical claims. No real hardware logos or product artwork are included.
+Afterlight uses a 40-year industry timeline beginning in August 1981, with four-week months. These are fictional names and original vector drawings inspired by recognizable real hardware generations. Reference launch years and regional launch months now follow historical hardware. Launch days are simplified to week one of each month. Audiences, market shares, licensing fees, demand, and retirement windows remain game-balancing values. See TIMELINE.md for the calendar anchors and sources. No real hardware logos or product artwork are included.
 
 | Afterlight platform | Familiar inspiration |
 | --- | --- |
