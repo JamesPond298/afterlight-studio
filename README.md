@@ -1,8 +1,23 @@
-# Afterlight — Studio Tycoon v2.3
+# Afterlight — Studio Tycoon v2.5
 
 Play online: https://jamespond298.github.io/afterlight-studio/
 
+## New in v2.5
+
+- Publisher deals. Self-publish, or sign with one of three publishers. They pay an advance at the start in exchange for a share of the receipts, add hype, and pay a bonus if the game hits their review target. The biggest label needs 5,000 fans.
+- Games Expo every June (after your first release). Skip it, or book a small booth, a large booth, or a main-stage showcase for fans and hype. Showing a game that is still in development earns 25% more hype.
+- Expansion packs. After researching franchise development, a game scoring 7+ that has finished its sales cycle can get one expansion. It sells at half price as a new release.
+- Rival studios release a game every 12 weeks. A rival hit scoring 8+ cuts sales of your games in the same genre by 15% for 8 weeks, and rivals compete for Game of the Year. See them under Market.
+
 A complete rebuild of Afterlight as an office-based game studio tycoon. The live studio, staged development choices, design/technology production, custom engines, hardware generations, staff management, reviews, and sales are the core experience. Near-name hardware parodies, dialogue, event content, artwork, formulas, and balancing are original.
+
+## New in v2.4
+
+- A rotating job market: a new season of generated applicants arrives every 24 weeks, with skills and salaries that grow as the industry matures. Pay for a recruitment drive to bring in a larger, stronger group right away. The original veterans remain available.
+- Critics explain their scores. Each release lists what reviewers noticed (priority fit, topic pairing, content for its scope, bugs, dated engines, sequels, trends, platform fit), and every reviewer writes a short quote.
+- Yearly industry awards every January for the previous year's releases: Best-in-genre at 8+, Game of the Year at 9+. Prizes include cash, fans and hype for your next game. Includes a trophy cabinet and two new achievements.
+- Sixteen new topics, for 32 in total: Zombies, Superheroes, Ninja, Wild West, Spies, Dinosaurs, Ocean, Military, Farming, Fashion, School, Cyberpunk, Wasteland, Mythology, Aviation and Time Travel.
+- Existing v2.3 saves load unchanged; new fields are added automatically.
 
 ## New in v2.3
 

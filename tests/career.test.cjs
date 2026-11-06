@@ -1,6 +1,6 @@
 const {test}=require('node:test');
 const E=require('../engine.js');
-function clear(s){if(s.event!==null)E.choose(s,false);s.news=[];s.review=null;}
+function clear(s){if(s.event!==null)E.choose(s,false);if(s.expo)E.attendExpo(s,0);s.news=[];s.review=null;}
 function weeks(s,n){for(let i=0;i<n;i++){clear(s);if(!E.step(s))throw Error('Blocked step '+s.week);if(s.ended)throw Error('Insolvent at '+s.week);}clear(s);}
 function research(s,id){if(s.tech.includes(id)||E.locked(s,E.feature(id))||s.cash<E.feature(id).cash+Math.max(80000,E.upkeep(s)*50)||s.rp<E.feature(id).rp)return;const err=E.study(s,id);if(err)throw Error(err);weeks(s,s.task.left);}
 function game(s,i){const platform=E.available(s).filter(p=>p.id==='vector'||p.id==='slate').at(-1)||E.available(s)[0];let size=s.tech.includes('large')&&s.staff.length>=2?'Large':s.tech.includes('medium')?'Medium':'Small';let err=E.start(s,{title:'Career '+i,topic:i%2?'Fantasy':'Space',genre:i%2?'RPG':'Strategy',size,audience:'Everyone',platforms:[platform.id],engine:s.engines.at(-1).id});if(err)throw Error(err);while(s.project.stage<3){const p=s.project,crew=E.active(s),eng=s.engines.at(-1);err=E.planStage(s,{weights:E.genres[p.genre].slice(p.stage*3,p.stage*3+3),assignments:[0,1,2].map((_,i)=>crew[i%crew.length].id),features:eng.features.filter(id=>Math.floor(E.feature(id).area/3)===p.stage)});if(err)throw Error(err);weeks(s,p.stageWeeks);}while(s.project.bugs>0)weeks(s,1);E.launch(s);clear(s);weeks(s,8);}

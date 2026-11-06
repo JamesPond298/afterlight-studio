@@ -2,6 +2,7 @@
   'use strict';
   const calendar=typeof module!=='undefined'?require('./calendar.js'):root.StudioCalendar;
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const poss=n=>/s$/i.test(n)?n+'’':n+'’s';
   const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   const genres = {
     Action: [40, 48, 12, 10, 40, 50, 20, 55, 25],
@@ -18,7 +19,11 @@
     Space: ['Action', 'Strategy', 'Simulation'], Mystery: ['Adventure', 'RPG'], Racing: ['Action', 'Simulation'], Fantasy: ['RPG', 'Adventure', 'Strategy'],
     Animals: ['Casual', 'Simulation'], Pirates: ['Adventure', 'RPG', 'Action'], City: ['Strategy', 'Simulation'], Sports: ['Action', 'Simulation', 'Casual'],
     Robots: ['Action', 'Strategy'], Cooking: ['Casual', 'Simulation'], History: ['Strategy', 'RPG'], Music: ['Casual', 'Simulation'],
-    Wilderness: ['Adventure', 'Simulation'], Detective: ['Adventure', 'RPG'], Dreams: ['Adventure', 'Casual'], Industry: ['Strategy', 'Simulation']
+    Wilderness: ['Adventure', 'Simulation'], Detective: ['Adventure', 'RPG'], Dreams: ['Adventure', 'Casual'], Industry: ['Strategy', 'Simulation'],
+    Zombies: ['Action', 'Strategy'], Superheroes: ['Action', 'RPG'], Ninja: ['Action', 'Adventure'], 'Wild West': ['Action', 'Adventure', 'Strategy'],
+    Spies: ['Action', 'Adventure'], Dinosaurs: ['Action', 'Simulation'], Ocean: ['Adventure', 'Simulation', 'Casual'], Military: ['Strategy', 'Action', 'Simulation'],
+    Farming: ['Simulation', 'Casual'], Fashion: ['Casual', 'Simulation'], School: ['Casual', 'RPG', 'Simulation'], Cyberpunk: ['RPG', 'Action', 'Adventure'],
+    Wasteland: ['RPG', 'Action', 'Strategy'], Mythology: ['RPG', 'Strategy', 'Adventure'], Aviation: ['Simulation', 'Action'], 'Time Travel': ['Adventure', 'RPG', 'Strategy']
   };
   // Fictional hardware parodies, ordered by industry generation. All hardware art is original.
   const platforms = [
@@ -101,8 +106,29 @@
     {title:'Open studio afternoon',text:'Students at the nearby design school ask to visit. Talking through your work might help you see it differently.',a:'Host a workshop · $1,500',b:'Send a recorded tour',cash:-1500,hype:3,rp:15,energy:5},
     {title:'A catalog preservation grant',text:'An archive offers funding for a documented, preserved version of your early work.',a:'Prepare an edition · +$8,000',b:'Donate the current builds',cash:8000,hype:0,rp:7,fans:40,energy:-5}
   ];
+  // Generated job applicants. They use their own random stream so hiring never shifts simulation outcomes.
+  const firstNames=['Ada','Bram','Cleo','Dev','Esme','Faye','Gus','Hana','Ines','Joss','Kai','Lena','Milo','Nia','Omar','Pia','Quin','Ravi','Suki','Theo','Uma','Vik','Wren','Yara','Zane','Ilse','Marco','Odile','Tariq','Bea'];
+  const lastNames=['Abbott','Banerjee','Castillo','Dunn','Eriksen','Fujita','Grant','Hollis','Ibarra','Jansen','Kowalski','Lindqvist','Mbeki','Novak','Ortiz','Petrov','Quill','Rasmussen','Sato','Tanaka','Ueda','Vance','Whitlock','Xu','Young','Zeller'];
+  const palette=['#d5b58e','#a6c2b3','#c4add3','#9ebbd0','#d4c18b','#aab9a0','#c99785','#b7c4e0','#e0b4b4','#bcd6a8'];
+  const seasonWeeks=24;
+  function hrng(s){s.hireSeed=(Math.imul(s.hireSeed>>>0,1103515245)+12345)>>>0;return s.hireSeed/4294967296;}
+  function applicant(s,i,boost){
+    const r=()=>hrng(s),pick=a=>a[Math.floor(r()*a.length)],years=Math.max(0,(s.week-1)/48),base=30+Math.min(55,years*1.6)+boost,spread=()=>Math.round((r()-.5)*24),focus=r();
+    let design=base+spread(),tech=base+spread();if(focus<.35){design+=18;tech-=12;}else if(focus<.7){tech+=18;design-=12;}
+    design=clamp(Math.round(design),10,140);tech=clamp(Math.round(tech),10,140);
+    const research=clamp(Math.round(base+spread()+(r()<.2?20:0)),10,140),speed=clamp(Math.round(50+years*.8+spread()+boost/2),25,120);
+    const role=focus<.35?(design>75?'Creative lead':'Designer'):focus<.7?(tech>75?'Lead engineer':'Engineer'):research>design&&research>tech?'Researcher':'Generalist';
+    const salary=Math.round((200+(design+tech)*9+speed*4+research*2)*(1+years*.03)/50)*50;
+    return {id:`hire${s.week}-${i}-${Math.floor(r()*1e6)}`,name:pick(firstNames)+' '+pick(lastNames),role,design,tech,research,speed,salary,color:pick(palette),energy:100,level:1,xp:0,activity:null};
+  }
+  function refreshApplicants(s,boost=0){const n=s.office>=2?4:3;s.applicants=Array.from({length:n+(boost?1:0)},(_,i)=>applicant(s,i,boost));s.nextApplicants=s.week+seasonWeeks;}
+  function recruitDrive(s){if(s.ended)return 'This studio has closed.';if(s.office===0)return 'Move into a studio before recruiting.';const cost=recruitCost(s);if(s.cash<cost)return 'A recruitment drive costs '+cost.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0})+'.';s.cash-=cost;refreshApplicants(s,12);log(s,'A recruitment drive attracted stronger applicants.');return null;}
+  const recruitCost=s=>8000*(s.office+1);
   function fresh(seed=Date.now()) {
-    return {version:2,calendarVersion:1,seed:seed>>>0,name:'Afterlight',week:1,cash:65000,fans:0,rp:12,office:0,
+    const s=freshState(seed);refreshApplicants(s);return s;
+  }
+  function freshState(seed) {
+    return {version:2,applicants:[],nextApplicants:1,hireSeed:((seed>>>0)^0x9e3779b9)>>>0,awards:[],rivals:[],expo:null,calendarVersion:1,seed:seed>>>0,name:'Afterlight',week:1,cash:65000,fans:0,rp:12,office:0,
       founder:{id:'founder',name:'Alex',role:'Founder',design:38,tech:38,research:45,speed:55,salary:0,color:'#dfae73',energy:100,level:1,xp:0,activity:null},
       staff:[],tech:[],buzz:0,topics:['Space','Mystery','Racing','Fantasy'],licenses:['slate'],engines:[{id:'starter',name:'Basic toolkit',features:[],week:1}],
       games:[],project:null,task:null,event:null,nextEvent:19,news:[],announced:[],trend:0,knowledge:{},areaXP:Array(9).fill(0),genreXP:{},
@@ -119,6 +145,13 @@
   const busy=s=>!!s.project||!!s.task||s.ended;
   function expected(s,size){return (25+s.week*.055)*({Small:1,Medium:1.65,Large:2.7,Flagship:4.2}[size]);}
   function estimate(s,d){const z=sizes[d.size]||sizes.Small;const ps=(d.platforms||['slate']).map(id=>platforms.find(p=>p.id===id)).filter(Boolean);return {cost:z.cost+ps.reduce((n,p)=>n+p.cost*(s.office+1),0),weeks:z.stage*3,weekly:upkeep(s),license:ps.filter(p=>!s.licenses.includes(p.id)).reduce((n,p)=>n+p.license,0)};}
+  // Publishers fund development up front in exchange for most of the sales receipts.
+  const publishers=[
+    {id:'bramble',name:'Bramble Publishing',advance:.6,royalty:.5,target:6,bonus:.25,hype:5,needFans:0,blurb:'A friendly indie label. Modest money, fair split.'},
+    {id:'lighthouse',name:'Lighthouse Interactive',advance:.9,royalty:.3,target:7,bonus:.5,hype:12,needFans:0,blurb:'Covers almost all costs and runs a small ad campaign.'},
+    {id:'northgate',name:'Northgate Games',advance:1.2,royalty:.2,target:8,bonus:1,hype:25,needFans:5000,blurb:'A major label. Big advance and marketing, demanding critics’ target.'}
+  ];
+  function publisherOffers(s,d){const e=estimate(s,d),base=e.cost+e.license;return publishers.map(p=>({...p,advance:Math.round(base*p.advance/100)*100,bonus:Math.round(base*p.bonus/100)*100,locked:s.fans<p.needFans?`Needs ${p.needFans.toLocaleString('en-US')} fans`:''}));}
   function start(s,d){
     if(busy(s))return 'Finish your current project first.';
     if(!has(genres,d.genre)||!has(topics,d.topic)||!s.topics.includes(d.topic)||!has(sizes,d.size))return 'Select an unlocked concept.';
@@ -129,11 +162,13 @@
     if(d.platforms.some(id=>!available(s).some(p=>p.id===id)))return 'One of those platforms is no longer on the market.';
     if(!s.engines.some(e=>e.id===d.engine))return 'Select an engine.';
     if(d.sequel&&(!s.tech.includes('sequel')||!s.games.some(g=>g.id===d.sequel)))return 'Research franchise development first.';
-    const e=estimate(s,d);if(s.cash<e.cost+e.license)return 'Not enough funds for development and licenses.';
-    s.cash-=e.cost+e.license;d.platforms.forEach(id=>{if(!s.licenses.includes(id))s.licenses.push(id);});
+    let deal=null;if(d.publisher){deal=publisherOffers(s,d).find(x=>x.id===d.publisher);if(!deal)return 'Choose a valid publisher.';if(deal.locked)return deal.locked;}
+    const e=estimate(s,d),advance=deal?deal.advance:0;if(s.cash+advance<e.cost+e.license)return 'Not enough funds for development and licenses.';
+    s.cash-=e.cost+e.license-advance;d.platforms.forEach(id=>{if(!s.licenses.includes(id))s.licenses.push(id);});
     s.project={title:String(d.title||'Untitled game').trim().slice(0,50)||'Untitled game',topic:d.topic,genre:d.genre,size:d.size,audience:d.audience,platforms:d.platforms.slice(),engine:d.engine,sequel:d.sequel||null,
-      stage:0,pending:true,stageDone:0,stageWeeks:z.stage,plans:[],design:0,tech:0,bugs:0,hype:s.buzz||0,done:0,polish:0,fit:0,features:[],cost:e.cost+e.license,overhead:0,marketing:[],start:s.week};
-    s.buzz=0;log(s,'Started '+s.project.title+'.');return null;
+      stage:0,pending:true,stageDone:0,stageWeeks:z.stage,plans:[],design:0,tech:0,bugs:0,hype:(s.buzz||0)+(deal?deal.hype:0),done:0,polish:0,fit:0,features:[],cost:e.cost+e.license-advance,overhead:0,marketing:[],start:s.week,
+      publisher:deal?{id:deal.id,name:deal.name,royalty:deal.royalty,target:deal.target,bonus:deal.bonus,advance}:null};
+    s.buzz=0;log(s,'Started '+s.project.title+(deal?` with ${deal.name} (advance $${advance.toLocaleString('en-US')}).`:'.'));return null;
   }
   function planStage(s,d){
     const p=s.project;if(!p||!p.pending||p.stage>2)return 'No development stage is waiting.';
@@ -156,7 +191,7 @@
   function buildEngine(s,name,ids){if(busy(s))return 'Finish your current project first.';if(!s.tech.includes('enginekit'))return 'Research custom engine architecture first.';if(!Array.isArray(ids)||!ids.length||ids.some(id=>!s.tech.includes(id)||!Number.isInteger(feature(id)?.area))||new Set(ids).size!==ids.length)return 'Select researched engine features.';const cost=6500+ids.reduce((n,id)=>n+feature(id).power*3500,0);if(s.cash<cost)return 'Not enough cash to create this engine.';s.cash-=cost;s.task={type:'engine',name:String(name||'Untitled engine').trim().slice(0,40)||'Untitled engine',features:ids.slice(),left:3+Math.ceil(ids.length/3),total:3+Math.ceil(ids.length/3)};return null;}
   function report(s,id){if(busy(s))return 'Finish your current project first.';const g=s.games.find(x=>x.id===id);if(!g||g.report)return 'This game already has a report.';s.task={type:'report',id,left:2,total:2,name:'Report: '+g.title};return null;}
   function contract(s,level){if(busy(s))return 'Finish your current project first.';if(![0,1,2].includes(level))return 'Choose a valid contract.';const total=[4,6,8][level],reward=[13500,32000,72000][level];s.task={type:'contract',name:['Interface prototype','Interactive exhibition','Simulation toolkit'][level],level,total,left:total,design:0,tech:0,need:[9,38,100][level],reward};return null;}
-  function hire(s,id){if(s.ended)return 'This studio has closed.';if(s.office===0)return 'Move into a studio before hiring.';if(team(s).length>=offices[s.office].desks)return 'No spare desks. Upgrade your office.';const p=people.find(x=>x.id===id);if(!p||s.staff.some(x=>x.id===id))return 'This creator is already on the team.';if(s.cash<p.salary*5)return 'Recruitment requires five weeks of salary.';s.cash-=p.salary*5;s.staff.push({...p,activity:null});log(s,p.name+' joined the team.');return null;}
+  function hire(s,id){if(s.ended)return 'This studio has closed.';if(s.office===0)return 'Move into a studio before hiring.';if(team(s).length>=offices[s.office].desks)return 'No spare desks. Upgrade your office.';const fromPool=(s.applicants||[]).find(x=>x.id===id),p=fromPool||people.find(x=>x.id===id);if(!p||s.staff.some(x=>x.id===id))return 'This creator is already on the team.';if(s.cash<p.salary*5)return 'Recruitment requires five weeks of salary.';s.cash-=p.salary*5;s.staff.push({...p,activity:null});if(fromPool)s.applicants=s.applicants.filter(x=>x.id!==id);log(s,p.name+' joined the team.');return null;}
   function personAction(s,id,type){const p=team(s).find(x=>x.id===id);if(!p||p.activity||s.ended)return 'This creator is unavailable.';if(s.project)return 'Finish the current game before changing staff activities.';if(s.task)return 'Finish studio work first.';if(type==='vacation'){const cost=id==='founder'?1200:2200;if(s.cash<cost)return 'Not enough funds for time off.';s.cash-=cost;p.activity={type:'vacation',left:3,total:3};return null;}if(type==='train'){if(s.cash<5500||s.rp<8)return 'Workshop needs $5,500 and 8 research points.';s.cash-=5500;s.rp-=8;p.activity={type:'train',left:4,total:4};return null;}return 'Unknown activity.';}
   function dismiss(s,id){if(s.project||s.task)return 'Finish current work before changing the team.';if(id==='founder')return 'The founder cannot leave.';const i=s.staff.findIndex(x=>x.id===id);if(i<0)return 'Creator not found.';const cost=s.staff[i].salary*2;if(s.cash<cost)return 'Two weeks of severance pay are required.';s.cash-=cost;log(s,s.staff[i].name+' left the studio.');s.staff.splice(i,1);return null;}
   function upgrade(s){if(busy(s))return 'Finish your current project before moving.';const o=offices[s.office+1];if(!o)return 'Your campus is fully upgraded.';if(s.games.length<o.games)return `Release ${o.games} games before moving.`;if(s.cash<o.cost)return 'Not enough cash for the move.';s.cash-=o.cost;s.office++;log(s,'Moved into '+o.name+'.');s.news.push({title:'A new chapter',text:`The keys to ${o.name} are yours. You now have ${o.desks} creator desks. Weekly rent is $${o.rent.toLocaleString()}.`});return null;}
@@ -165,6 +200,7 @@
   function workerPower(p){return (.55+p.speed/100)*(.4+p.energy/166);}
   function finishTask(s,t){
     if(t.type==='insight'){s.rp+=t.reward;s.lastGain.r+=t.reward;log(s,'Research sprint complete: +'+t.reward+' research points.');}
+    if(t.type==='expansion')finishExpansion(s,t);
     if(t.type==='research'){s.tech.push(t.id);log(s,'Research complete: '+t.name+'.');}
     if(t.type==='topic'){s.topics.push(t.id);log(s,'New topic researched: '+t.id+'.');}
     if(t.type==='engine'){s.engines.push({id:'engine'+s.week+'-'+s.engines.length,name:t.name,features:t.features,week:s.week});log(s,'Engine complete: '+t.name+'.');}
@@ -172,11 +208,52 @@
     if(t.type==='contract'){const ratio=Math.min(t.design/t.need,t.tech/t.need);if(ratio>=1){s.cash+=t.reward;s.rp+=5;s.contracts++;log(s,'Contract delivered: +$'+t.reward.toLocaleString()+'.');}else{s.cash-=t.reward*.12;log(s,'Contract missed its deadline. Paid a 12% penalty. Train your team or choose a smaller job.');}}
     s.task=null;
   }
-  function achievements(s){const tests=[['first','First release',s.games.length>=1],['report','Lessons learned',s.games.some(g=>g.report)],['engine','Toolmaker',s.engines.length>1],['team','A real team',s.staff.length>=3],['hit','Critics’ favorite',s.games.some(g=>g.score>=9)],['million','Millionaire',s.cash>=1000000],['catalog','A lasting catalog',s.games.length>=12],['fans','A hundred thousand fans',s.fans>=100000],['campus','Dream studio',s.office===3]];tests.forEach(([id,name,check])=>{if(check&&!s.achievements.includes(id)){s.achievements.push(id);log(s,'Achievement: '+name+'.');}});}
+  function achievements(s){const tests=[['first','First release',s.games.length>=1],['report','Lessons learned',s.games.some(g=>g.report)],['engine','Toolmaker',s.engines.length>1],['team','A real team',s.staff.length>=3],['hit','Critics’ favorite',s.games.some(g=>g.score>=9)],['million','Millionaire',s.cash>=1000000],['catalog','A lasting catalog',s.games.length>=12],['fans','A hundred thousand fans',s.fans>=100000],['campus','Dream studio',s.office===3],['award','Award winner',(s.awards||[]).length>0],['goty','Game of the Year',(s.awards||[]).some(a=>a.category==='Game of the Year')]];tests.forEach(([id,name,check])=>{if(check&&!s.achievements.includes(id)){s.achievements.push(id);log(s,'Achievement: '+name+'.');}});}
+  // Yearly games expo each June. Pauses time until the player chooses.
+  function expoOptions(s){const year=s.expo?.year||calendar.at(s.week).year,infl=1+Math.max(0,year-calendar.startYear)*.08,c=x=>Math.round(x*infl/500)*500;return [
+    {name:'Skip this year',cost:0,hype:0,fans:0,office:0},
+    {name:'Small booth',cost:c(5000),hype:15,fans:Math.round(300+s.fans*.01),office:0},
+    {name:'Large booth',cost:c(25000),hype:40,fans:Math.round(1500+s.fans*.03),office:1},
+    {name:'Main-stage showcase',cost:c(90000),hype:80,fans:Math.round(5000+s.fans*.06),office:2}];}
+  function attendExpo(s,i){if(!s.expo)return 'No expo is waiting.';const o=expoOptions(s)[i];if(!o)return 'Choose an expo option.';if(s.office<o.office)return offices[o.office].name+' required.';if(s.cash<o.cost)return 'Not enough cash for that option.';
+    s.cash-=o.cost;s.fans+=o.fans;const hype=Math.round(o.hype*(s.project?1.25:1));if(s.project)s.project.hype+=hype;else s.buzz=(s.buzz||0)+hype;
+    log(s,i?`${o.name} at Games Expo ${s.expo.year}: +${o.fans.toLocaleString('en-US')} fans, +${hype} hype${s.project?' for '+s.project.title:''}.`:`Skipped Games Expo ${s.expo.year}.`);s.expo=null;return null;}
+  // Expansion packs extend a successful release after its sales cycle.
+  const expansionCost=g=>Math.round(sizes[g.size].cost*.5/500)*500,expansionWeeks=g=>sizes[g.size].stage;
+  function expansionBlock(s,g){if(!g)return 'Game not found.';if(!s.tech.includes('sequel'))return 'Research franchise development first.';if(g.expansion)return 'Expansions cannot be expanded.';if(g.expanded)return 'This game already has an expansion.';if(g.score<7)return 'Only games scoring 7+ can support an expansion.';if(g.age<20)return 'Wait until its sales cycle completes.';return '';}
+  function startExpansion(s,id){if(busy(s))return 'Finish your current project first.';const g=s.games.find(x=>x.id===id),block=expansionBlock(s,g);if(block)return block;if(!active(s).length)return 'Wait until a creator returns.';const cost=expansionCost(g);if(s.cash<cost)return 'Not enough cash for the expansion.';s.cash-=cost;const w=expansionWeeks(g);s.task={type:'expansion',id,name:'Expansion: '+g.title,left:w,total:w,cost};return null;}
+  function finishExpansion(s,t){const base=s.games.find(x=>x.id===t.id);base.expanded=true;const power=active(s).reduce((n,x)=>n+workerPower(x),0),score=clamp(Math.round((base.score-.6+Math.min(.8,power*.15))*10)/10,1,10);
+    const units=Math.max(100,Math.round(base.units*.3*Math.pow(score/base.score,2)*(1+s.fans/(s.fans+200000))));
+    const reviews=base.reviews.map(r=>({name:r.name,score:clamp(Math.round(score+(r.score-base.score)),1,10),quote:score>=base.score?'Even better than the original.':'More of what fans loved.'}));
+    s.games.unshift({id:'exp'+s.week+'-'+s.games.length,title:(base.title+': Expansion').slice(0,60),topic:base.topic,genre:base.genre,size:base.size,audience:base.audience,platforms:base.platforms.slice(),engine:base.engine,sequel:null,features:[],score,reviews,notes:[{good:true,text:'An expansion for '+base.title+'.'}],quality:base.quality,design:0,tech:0,bugs:0,fit:base.fit,matching:base.matching,ratio:100,units,sold:0,revenue:0,age:0,weekly:[],price:Math.max(5,Math.round(base.price*.5)),cost:t.cost,week:s.week,report:true,rank:99,expansion:base.id,royalty:base.royalty,publisher:base.publisher});
+    log(s,`Released ${base.title}: Expansion (${score}/10).`);}
+  // Rival studios release games; hits make the same genre harder to launch into.
+  const rivalStudios=['Copperline Games','Bluehour Studios','Pixel Orchard','Gravity Well','Quiet Thunder','Red Lantern Works'];
+  const rivalA=['Iron','Shadow','Crystal','Final','Endless','Neon','Silent','Broken','Lost','Eternal','Wild','Hidden'],rivalB=['Horizon','Kingdom','Protocol','Legends','Frontier','Signal','Empire','Tides','Requiem','Quest','Circuit','Harvest'];
+  function rivalRelease(s){const r=()=>hrng(s),pick=a=>a[Math.floor(r()*a.length)],genre=pick(Object.keys(genres)),score=Math.round((5+r()*4.6)*10)/10,g={studio:pick(rivalStudios),title:pick(rivalA)+' '+pick(rivalB),genre,score,week:s.week};
+    s.rivals.unshift(g);s.rivals=s.rivals.slice(0,30);log(s,`${g.studio} released ${g.title} (${genre}, ${score}/10).`);
+    if(score>=9)s.news.push({title:`${g.studio} has a hit`,text:`Critics are raving about ${g.title} (${score}/10). ${genre} players will be busy for a while: a ${genre} game launched in the next 8 weeks will sell less.`});}
+  const rivalThreat=(s,genre)=>(s.rivals||[]).find(r=>r.genre===genre&&r.score>=8&&s.week-r.week<=8);
+  // Yearly industry awards for the previous calendar year's releases.
+  function ceremony(s,year){
+    const from=calendar.weekOf(year,1,1),to=calendar.weekOf(year+1,1,1),eligible=s.games.filter(g=>g.week>=from&&g.week<to);if(!eligible.length)return;
+    const won=[],best=eligible.reduce((a,b)=>b.score>a.score?b:a),rivalTop=(s.rivals||[]).filter(r=>r.week>=from&&r.week<to).reduce((a,b)=>!a||b.score>a.score?b:a,null);
+    if(best.score>=9&&(!rivalTop||best.score>=rivalTop.score))won.push({category:'Game of the Year',game:best});else if(best.score>=9)log(s,`${best.title} was nominated for Game of the Year ${year}, but ${poss(rivalTop.studio)} ${rivalTop.title} (${rivalTop.score}) won.`);
+    const byGenre={};eligible.forEach(g=>{if(g.score>=8&&(!byGenre[g.genre]||g.score>byGenre[g.genre].score))byGenre[g.genre]=g;});Object.values(byGenre).forEach(g=>won.push({category:'Best '+g.genre+' game',game:g}));
+    if(!won.length){log(s,`No nominations at the ${year} industry awards. Releases scoring 8+ compete for category awards; 9+ for Game of the Year.`);return;}
+    const inflation=1+Math.max(0,year-calendar.startYear)*.08;let prize=0,fans=0,buzz=0;
+    won.forEach(w=>{const big=w.category==='Game of the Year';prize+=Math.round((big?40000:12000)*inflation/1000)*1000;fans+=Math.round(1500+s.fans*(big?.08:.03));buzz+=big?30:12;s.awards.push({year,category:w.category,title:w.game.title,game:w.game.id});});
+    s.cash+=prize;s.fans+=fans;s.buzz=(s.buzz||0)+buzz;
+    s.news.push({title:`The ${year} Industry Awards`,text:`${s.name} took home ${won.length===1?'an award':won.length+' awards'}: ${won.map(w=>w.category+' for '+w.game.title).join('; ')}. The win brings $${prize.toLocaleString('en-US')} in prize money, ${fans.toLocaleString('en-US')} new fans, and +${buzz} hype for your next game.`});
+    log(s,`Won ${won.length} award${won.length===1?'':'s'} at the ${year} industry awards.`);
+  }
   function step(s){
-    if(s.ended||s.event!==null||s.project?.pending)return false;
+    if(s.ended||s.event!==null||s.expo||s.project?.pending)return false;
     s.week++;s.lastGain={d:0,t:0,r:0};let revenue=0;
-    s.games.forEach(g=>{if(g.age<20){const curve=[.2,.15,.11,.08,.065,.055,.045,.04,.035,.03,.027,.024,.022,.02,.018,.017,.016,.015,.014,.019];const units=g.age===19?g.units-g.sold:Math.min(g.units-g.sold,Math.round(g.units*curve[g.age]));g.weekly.push(units);g.sold+=units;g.revenue+=units*g.price*.7;revenue+=units*g.price*.7;g.rank=clamp(Math.round(20000/Math.max(1,units)),1,99);s.fans+=Math.round(units*(g.score>=7?.035:.012));g.age++;}});
+    if(s.week>=s.nextApplicants){refreshApplicants(s);if(s.office>0)log(s,'A new season of job applicants is available.');}
+    if(!s.rivals)s.rivals=[];if(s.week%12===6)rivalRelease(s);
+    {const d=calendar.at(s.week);if(d.month===1&&d.week===1)ceremony(s,d.year-1);if(d.month===6&&d.week===1&&s.games.length)s.expo={year:d.year};}
+    s.games.forEach(g=>{if(g.age<20){const curve=[.2,.15,.11,.08,.065,.055,.045,.04,.035,.03,.027,.024,.022,.02,.018,.017,.016,.015,.014,.019];const units=g.age===19?g.units-g.sold:Math.min(g.units-g.sold,Math.round(g.units*curve[g.age]));g.weekly.push(units);g.sold+=units;const net=units*g.price*.7*(g.royalty??1);g.revenue+=net;revenue+=net;g.rank=clamp(Math.round(20000/Math.max(1,units)),1,99);s.fans+=Math.round(units*(g.score>=7?.035:.012));g.age++;}});
     s.cash+=revenue-upkeep(s);const crew=active(s);team(s).forEach(p=>{if(p.activity){p.activity.left--;if(p.activity.left<=0){if(p.activity.type==='vacation')p.energy=100;else{p.design+=5;p.tech+=5;p.speed+=3;p.research+=4;}log(s,p.name+' completed '+p.activity.type+'.');p.activity=null;}}});
     const insight=researchRate(s);s.rp+=insight;s.lastGain.r+=insight;
     const p=s.project;
@@ -210,8 +287,20 @@
     const base=clamp(quality/10,1,10);const reviews=['The Play Ledger','Quarterly Byte','Side Quest Review','Digital Dispatch'].map(name=>({name,score:clamp(Math.round(base+(rng(s)-.5)*1.2),1,10)}));const score=Math.round(reviews.reduce((n,r)=>n+r.score,0)/4*10)/10;
     const ps=p.platforms.map(id=>platforms.find(x=>x.id===id)),shares=market(s),reach=ps.reduce((n,x)=>n+x.reach*(.65+(shares.find(a=>a.id===x.id)?.share||3)/100*1.2),0)/(ps.length===2?1.25:1),aud=ps.some(x=>x.audience===p.audience)?1.15:p.audience==='Everyone'?1:.86,genreFit=ps.some(x=>x.genres.includes(p.genre))?1.1:.9;
     const trend=Object.keys(genres)[s.trend]===p.genre?1.25:1,repeat=s.games.slice(0,2).filter(g=>g.topic===p.topic&&g.genre===p.genre).length;
-    const units=Math.max(200,Math.round((1900+quality*38+s.fans*.3)*Math.pow(score/7,2)*sizes[p.size].units*reach*aud*genreFit*trend*(1+p.hype/130)*(1-repeat*.13)*(parent?1.2:1)));
-    const g={id:'game'+s.week+'-'+s.games.length,title:p.title,topic:p.topic,genre:p.genre,size:p.size,audience:p.audience,platforms:p.platforms,engine:p.engine,sequel:p.sequel,features:p.features.slice(),score,reviews,quality,design:Math.round(p.design),tech:Math.round(p.tech),bugs:p.bugs,fit:Math.round(fit*100),matching,ratio:Math.round(ratio*100),units,sold:0,revenue:0,age:0,weekly:[],price:sizes[p.size].price,cost:p.cost+p.overhead,week:s.week,report:false,rank:99};
+    const notes=[],add=(good,text)=>notes.push({good,text});
+    if(fit>=.9)add(true,`The development focus suits ${/^[AEIOU]/.test(p.genre)?'an':'a'} ${p.genre} game perfectly.`);else if(fit<.7)add(false,`Time went into the wrong areas for ${/^[AEIOU]/.test(p.genre)?'an':'a'} ${p.genre} game.`);
+    add(matching,matching?`${p.topic} and ${p.genre} are a natural pairing.`:`${p.topic} is an awkward fit for ${/^[AEIOU]/.test(p.genre)?'an':'a'} ${p.genre} game.`);
+    if(ratio>=1.4)add(true,'Packed with content for its size and era.');else if(ratio<.8)add(false,'Feels thin next to other games of its scope.');
+    if(p.bugs===0)add(true,'Remarkably stable at launch.');else if(p.bugs>=8)add(false,`${p.bugs} bugs shipped, and players noticed.`);
+    if(old>.5)add(false,'The engine is starting to look dated.');if(p.features.length>=3)add(true,'Engine features add real depth.');
+    if(parent)add(sequelBonus>0,sequelBonus>0?'A sequel that builds on its predecessor with new technology.':'Too similar to its predecessor; it runs on the same engine.');
+    const rival=rivalThreat(s,p.genre),competition=rival?.85:1;if(rival)add(false,`Launched in the shadow of ${poss(rival.studio)} ${rival.title}.`);
+    if(trend>1)add(true,`Arrives while ${p.genre} games are trending.`);if(genreFit<1)add(false,`${p.genre} games are not a strength of ${ps.map(x=>x.name).join(' / ')}.`);if(aud<1)add(false,'The chosen audience is uncommon on this platform.');
+    const quotes={10:['A landmark. People will talk about this one for years.','Close to flawless.'],9:['Essential. Clear a weekend for it.','Confident, generous and beautifully made.'],8:['A great game with only small stumbles.','Easy to recommend.'],7:['Solid and enjoyable, if rarely surprising.','Good fun with a few rough edges.'],6:['Decent, but it plays it safe.','Enjoyable in short sessions.'],5:['Fine ideas, uneven execution.','Neither bad nor memorable.'],4:['Struggles to hold attention.','The ideas outpace the craft.'],3:['Hard to recommend at full price.','Frustrating more often than fun.'],2:['A rough, unfinished experience.','Little here works as intended.'],1:['Avoid.','A misfire from start to finish.']};
+    reviews.forEach((r,i)=>{const pool=quotes[r.score];r.quote=pool[(s.week+i)%pool.length];});
+    const units=Math.max(200,Math.round((1900+quality*38+s.fans*.3)*Math.pow(score/7,2)*sizes[p.size].units*reach*aud*genreFit*trend*(1+p.hype/130)*(1-repeat*.13)*(parent?1.2:1)*competition));
+    const g={id:'game'+s.week+'-'+s.games.length,title:p.title,topic:p.topic,genre:p.genre,size:p.size,audience:p.audience,platforms:p.platforms,engine:p.engine,sequel:p.sequel,features:p.features.slice(),score,reviews,notes,quality,design:Math.round(p.design),tech:Math.round(p.tech),bugs:p.bugs,fit:Math.round(fit*100),matching,ratio:Math.round(ratio*100),units,sold:0,revenue:0,age:0,weekly:[],price:sizes[p.size].price,cost:p.cost+p.overhead,week:s.week,report:false,rank:99};
+    if(p.publisher){g.royalty=p.publisher.royalty;g.publisher=p.publisher.name;if(score>=p.publisher.target){s.cash+=p.publisher.bonus;g.cost-=p.publisher.bonus;g.notes.push({good:true,text:`Met ${poss(p.publisher.name)} ${p.publisher.target}/10 target: +$${p.publisher.bonus.toLocaleString('en-US')} bonus.`});}else g.notes.push({good:false,text:`Missed ${poss(p.publisher.name)} ${p.publisher.target}/10 target. No bonus.`});}
     s.games.unshift(g);s.review=g.id;s.rp+=8+Math.round(points/9);s.genreXP[p.genre]=(s.genreXP[p.genre]||0)+1;s.project=null;team(s).forEach(x=>x.energy=clamp(x.energy+3,0,100));log(s,`${g.title} released. Average review: ${score}/10.`);achievements(s);return null;
   }
   function migrate(v){const s=fresh(v.seed);s.name=String(v.name||'Afterlight');s.week=v.week;s.cash=v.cash;s.fans=v.fans;s.rp=v.rp;s.office=Math.min(3,v.office);s.founder.energy=Number.isFinite(v.morale)?v.morale:100;const map={Cozy:'Casual',Tactics:'Strategy',Adventure:'Adventure',Arcade:'Action',Mystery:'Adventure',Sandbox:'Simulation'};s.games=(v.games||[]).map((g,i)=>({id:'legacy'+i,title:String(g.title),topic:'Space',genre:map[g.genre]||'Simulation',size:g.size==='Flagship'?'Large':g.size,audience:'Everyone',platforms:['slate'],engine:'starter',features:[],score:g.score,reviews:['The Play Ledger','Quarterly Byte','Side Quest Review','Digital Dispatch'].map(name=>({name,score:Math.round(g.score)})),quality:g.score*10,design:25,tech:25,bugs:g.bugs||0,fit:g.fit||50,matching:!!g.themeFit,ratio:100,units:g.units,sold:g.sold,revenue:g.revenue,age:20,weekly:[],price:g.price,cost:g.cost||0,week:g.week||1,report:false,rank:99}));s.staff=(v.staff||[]).slice(0,offices[s.office].desks-1).map((p,i)=>({...people[i],name:String(p.name),activity:null}));s.log=[{week:s.week,text:'Your version 1 studio has migrated. The catalog and finances are preserved; any unfinished work is closed.'}];return s;}
@@ -222,15 +311,23 @@
     for(const k of ['staff','tech','topics','licenses','engines','games','news','announced','log','history','achievements','areaXP'])if(!Array.isArray(v[k])||v[k].length>10000)fail();
     const validPerson=x=>x&&text(x.id)&&text(x.name)&&text(x.role)&&/^#[a-fA-F0-9]{6}$/.test(x.color)&&['design','tech','research','speed','salary','energy','level','xp'].every(k=>finite(x[k])&&x[k]>=0)&&(!x.activity||['train','vacation'].includes(x.activity.type)&&Number.isInteger(x.activity.left)&&x.activity.left>0);
     if(!validPerson(v.founder)||v.staff.length>7||v.staff.some(x=>!validPerson(x))||new Set(team(v).map(x=>x.id)).size!==team(v).length)fail();
+    if(v.applicants===undefined)v.applicants=[];if(v.awards===undefined)v.awards=[];if(!Number.isInteger(v.hireSeed))v.hireSeed=((v.seed>>>0)^0x9e3779b9)>>>0;if(!finite(v.nextApplicants))v.nextApplicants=v.week;
+    if(!Array.isArray(v.applicants)||v.applicants.length>12||v.applicants.some(x=>!validPerson(x))||!Array.isArray(v.awards)||v.awards.length>10000||v.awards.some(a=>!a||!text(a.category)||!text(a.title)||!finite(a.year)))fail();
+    if(v.rivals===undefined)v.rivals=[];if(v.expo===undefined)v.expo=null;
+    if(!Array.isArray(v.rivals)||v.rivals.length>100||v.rivals.some(r=>!r||!text(r.studio)||!text(r.title)||!has(genres,r.genre)||!finite(r.score)||!finite(r.week)))fail();
+    if(v.expo!==null&&(typeof v.expo!=='object'||!finite(v.expo.year)))fail();
+    if(v.project?.publisher&&(!text(v.project.publisher.name)||!publishers.some(x=>x.id===v.project.publisher.id)||['royalty','target','bonus','advance'].some(k=>!finite(v.project.publisher[k]))))fail();
+    if(v.games.some(g=>g&&g.royalty!==undefined&&(!finite(g.royalty)||g.royalty<0||g.royalty>1)))fail();
+    if(v.games.some(g=>g&&g.notes!==undefined&&(!Array.isArray(g.notes)||g.notes.some(n=>!n||!text(n.text)))))fail();
     if(v.topics.some(x=>!has(topics,x))||v.tech.some(x=>!feature(x))||v.licenses.some(x=>!platforms.some(p=>p.id===x))||v.engines.some(x=>!text(x.id)||!text(x.name)||!finite(x.week)||!Array.isArray(x.features)||x.features.some(id=>!Number.isInteger(feature(id)?.area))))fail();
     if(!v.engines.length||!v.knowledge||typeof v.knowledge!=='object'||!v.genreXP||typeof v.genreXP!=='object'||v.areaXP.length!==9||v.areaXP.some(x=>!finite(x))||!Number.isInteger(v.trend)||v.trend<0||v.trend>5||!finite(v.nextEvent))fail();
     if(v.buzz!==undefined&&(!finite(v.buzz)||v.buzz<0))fail();if(v.event!==null&&(!Number.isInteger(v.event)||!events[v.event]))fail();
     if(v.games.some(g=>!g||!text(g.title)||!text(g.id)||!has(genres,g.genre)||!has(topics,g.topic)||!has(sizes,g.size)||['score','units','sold','revenue','cost','age','price','week','design','tech','fit','ratio'].some(k=>!finite(g[k]))||!Array.isArray(g.reviews)||g.reviews.length!==4||g.reviews.some(r=>!text(r.name)||!finite(r.score))||!Array.isArray(g.weekly)||g.weekly.some(x=>!finite(x))||!Array.isArray(g.platforms)||g.platforms.some(id=>!platforms.some(p=>p.id===id))))fail();
     if(v.project){const p=v.project;if(!text(p.title)||!has(genres,p.genre)||!has(topics,p.topic)||!has(sizes,p.size)||!Number.isInteger(p.stage)||p.stage<0||p.stage>3||!Array.isArray(p.plans)||!Array.isArray(p.features)||!Array.isArray(p.platforms)||!Array.isArray(p.marketing)||!v.engines.some(x=>x.id===p.engine)||['stageDone','stageWeeks','done','design','tech','bugs','hype','fit','cost','overhead','polish','start'].some(k=>!finite(p[k]))||p.stageWeeks<1)fail();if(p.plans.some(q=>!Array.isArray(q.weights)||q.weights.length!==3||q.weights.some(x=>!finite(x))||!Array.isArray(q.assignments)||q.assignments.length!==3||q.assignments.some(id=>!team(v).some(x=>x.id===id))||!finite(q.load)||!finite(q.fit)||!Array.isArray(q.features)||q.features.some(id=>!feature(id))))fail();if(p.plans.length!==p.stage+(p.pending?0:p.stage<3?1:0))fail();}
-    if(v.task){const t=v.task;if(!['research','topic','engine','report','contract','insight'].includes(t.type)||!finite(t.left)||!finite(t.total)||!text(t.name))fail();if(t.type==='research'&&!feature(t.id)||t.type==='topic'&&!has(topics,t.id)||t.type==='report'&&!v.games.some(x=>x.id===t.id))fail();if(t.type==='engine'&&(!Array.isArray(t.features)||t.features.some(id=>!Number.isInteger(feature(id)?.area))))fail();if(t.type==='insight'&&(!Number.isInteger(t.reward)||t.reward<0))fail();if(t.type==='contract'&&['design','tech','need','reward'].some(k=>!finite(t[k])))fail();}
+    if(v.task){const t=v.task;if(!['research','topic','engine','report','contract','insight','expansion'].includes(t.type)||!finite(t.left)||!finite(t.total)||!text(t.name))fail();if(t.type==='research'&&!feature(t.id)||t.type==='topic'&&!has(topics,t.id)||(t.type==='report'||t.type==='expansion')&&!v.games.some(x=>x.id===t.id))fail();if(t.type==='expansion'&&!finite(t.cost))fail();if(t.type==='engine'&&(!Array.isArray(t.features)||t.features.some(id=>!Number.isInteger(feature(id)?.area))))fail();if(t.type==='insight'&&(!Number.isInteger(t.reward)||t.reward<0))fail();if(t.type==='contract'&&['design','tech','need','reward'].some(k=>!finite(t[k])))fail();}
     if(v.log.some(x=>!text(x.text)||!finite(x.week))||v.history.some(x=>!finite(x))||v.news.some(x=>!text(x.title)||!text(x.text)))fail();if(v.calendarVersion!==1){v.calendarVersion=1;v.announced=platforms.filter(p=>p.start<=v.week).map(p=>p.id);log(v,'Calendar updated: four-week months and historical launch years. Your cash, releases and ongoing work are preserved; licenses remain owned, but new projects follow the new timeline.');}return v;
   }
-  const api={calendar,researchRate,researchSprint,genres,areas,stages,topics,platforms,research,people,offices,sizes,events,fresh,team,active,upkeep,available,market,estimate,expected,start,planStage,locked,study,topicResearch,buildEngine,report,contract,hire,personAction,dismiss,upgrade,marketGame,choose,step,launch,validate,log,feature,busy};
+  const api={poss,publishers,publisherOffers,expoOptions,attendExpo,expansionCost,expansionWeeks,expansionBlock,startExpansion,rivalRelease,rivalThreat,refreshApplicants,recruitDrive,recruitCost,ceremony,seasonWeeks,calendar,researchRate,researchSprint,genres,areas,stages,topics,platforms,research,people,offices,sizes,events,fresh,team,active,upkeep,available,market,estimate,expected,start,planStage,locked,study,topicResearch,buildEngine,report,contract,hire,personAction,dismiss,upgrade,marketGame,choose,step,launch,validate,log,feature,busy};
   if(typeof module!=='undefined')module.exports=api;root.Afterlight=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
 

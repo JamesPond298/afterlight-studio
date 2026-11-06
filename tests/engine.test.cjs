@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const E=require('../engine.js');
 const concept=(s,extra={})=>({title:'Star Cartographer',topic:'Space',genre:'Strategy',size:'Small',audience:'Everyone',platforms:[E.available(s)[0].id],engine:s.engines.at(-1).id,...extra});
-function clear(s){if(s.event!==null)assert.equal(E.choose(s,false),null);s.news=[];s.review=null;}
+function clear(s){if(s.event!==null)assert.equal(E.choose(s,false),null);if(s.expo)E.attendExpo(s,0);s.news=[];s.review=null;}
 function advance(s,n){for(let i=0;i<n;i++){clear(s);assert.equal(E.step(s),true);}clear(s);}
 function plan(s,weights=null){const p=s.project,crew=E.active(s);assert.equal(E.planStage(s,{weights:weights||E.genres[p.genre].slice(p.stage*3,p.stage*3+3),assignments:[0,1,2].map((_,i)=>crew[i%crew.length].id),features:[]}),null);}
 function make(s,extra={},optimal=true){clear(s);assert.equal(E.start(s,concept(s,extra)),null);while(s.project.stage<3){if(s.project.pending)plan(s,optimal?null:[0,100,0]);advance(s,s.project.stageWeeks);}advance(s,Math.ceil(s.project.bugs/2)+1);assert.equal(E.launch(s),null);clear(s);return s.games[0];}

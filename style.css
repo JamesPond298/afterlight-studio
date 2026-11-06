@@ -8,3 +8,7 @@ dialog{overflow:hidden}dialog[open]{display:flex;flex-direction:column}.modal-he
 .research-metric{border:0;border-right:1px solid #ced5ca;border-radius:0;box-shadow:none;background:transparent;text-align:left;font-weight:400;min-width:150px}.research-metric label{cursor:pointer}.research-metric:hover:not(:disabled){background:#e8edda}.calendar-help{color:#c3d6ca;margin-top:3px}.coach-panel{border-color:#86a7a0}.coach-panel .panel-title{background:#d4e5d8}.coach-panel h2{font-size:21px}.learning-loop{display:grid;gap:5px;margin:15px 0 6px;font-size:11px;color:#57716c}.learning-loop span{padding-left:8px;border-left:3px solid #b8cdc0}.research-sources p{margin:8px 0 12px}.research-sources button{margin:0 8px 8px 0}.side-panel{max-height:calc(100dvh - 250px);overflow-y:auto;scrollbar-width:thin;padding-bottom:10px}.tabs button.selected:hover:not(:disabled){background:#3a7c87;color:#fff9e5}@media(max-width:1000px){.research-metric{min-width:0}}@media(max-width:700px){.side-panel{max-height:calc(100dvh - 245px)}.coach-panel h2{font-size:18px}.calendar-help{font-size:9px}.metrics .research-metric{display:block}.research-metric small{font-size:9px}.research-metric{padding:8px 10px}}
 
 @media(max-width:700px){.side-panel:has(.coach-panel){width:calc(100% - 30px)}}
+
+/* v2.4 critic notes */
+.critic-notes ul{list-style:none;margin:8px 0 0;padding:0}.critic-notes li{padding:3px 0;font-size:.92em}.critic-notes li span{display:inline-block;width:1.2em;font-weight:700}.note-good span{color:#5fae74}.note-bad span{color:#d0705f}
+

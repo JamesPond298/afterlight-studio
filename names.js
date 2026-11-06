@@ -17,7 +17,23 @@
     Wilderness:['Pinewood','Trail','Summit','River','Wildwood','Outpost'],
     Detective:['Cold Case','Alibi','Evidence','Inspector','Clue','Backstreet'],
     Dreams:['Daydream','Velvet','Reverie','Starlit','Lucid','Sleepwalker'],
-    Industry:['Ironworks','Foundry','Freight','Steam','Assembly','Copper']
+    Industry:['Ironworks','Foundry','Freight','Steam','Assembly','Copper'],
+    Zombies:['Undead','Outbreak','Last Light','Quarantine','Shamble','Rot'],
+    Superheroes:['Caped','Justice','Masked','Titan','Vigilant','Hero City'],
+    Ninja:['Shadow','Shuriken','Silent Blade','Kunai','Moonlit','Ronin'],
+    'Wild West':['Dustbowl','Sundown','Outlaw','Six-Shooter','Frontier','Rattlesnake'],
+    Spies:['Covert','Cipher','Double Agent','Dead Drop','Blackout','Operative'],
+    Dinosaurs:['Jurassic','Raptor','Fossil','Primeval','Tar Pit','Thunder Lizard'],
+    Ocean:['Deep Blue','Coral','Abyss','Tidal','Reef','Undertow'],
+    Military:['Frontline','Battalion','Outpost','Vanguard','Iron Brigade','Recon'],
+    Farming:['Harvest','Meadowbrook','Orchard','Barnyard','Sunny Acres','Tractor'],
+    Fashion:['Runway','Couture','Boutique','Glamour','Stitch','Trendsetter'],
+    School:['Campus','Homeroom','Hall Pass','Detention','Class Act','Graduation'],
+    Cyberpunk:['Neon','Chrome City','Netrunner','Synthwave','Datajack','Megacorp'],
+    Wasteland:['Fallout','Rust','Ashland','Scavenger','Dustwind','Ruin'],
+    Mythology:['Olympus','Titan','Valhalla','Oracle','Labyrinth','Pantheon'],
+    Aviation:['Skyward','Tailwind','Jetstream','Altitude','Runway','Barnstorm'],
+    'Time Travel':['Paradox','Chrono','Timeline','Yesterday','Clockwork','Epoch']
   };
   const endings={Action:['Rush','Strike','Breakout','Overload','Clash','Uprising'],Adventure:['Voyage','Crossing','Odyssey','Journey','Secrets','Passage'],RPG:['Chronicles','Legacy','Oath','Saga','Keepers','Awakening'],Strategy:['Command','Dominion','Tactics','Frontiers','Council','Siege'],Simulation:['Workshop','Manager','Life','Company','Builder','Works'],Casual:['Garden','Shuffle','Days','Party','Pals','Playground']};
   const adjectives=['Amber','Silver','Cinder','Quiet','Bright','Wandering','Crimson','Golden','Paper','Distant','Electric','Velvet','Little','Copper','Northern','Open'];
